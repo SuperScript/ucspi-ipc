@@ -1,0 +1,86 @@
+\documentclass{book}
+\usepackage{sstdef}
+\title{ucspi-ipc}
+
+\begin{document}
+\section{Introductoin}
+
+\paragraph{\href{How to install ucspi-ipc}{install.html}}
+
+\subsubsection{Servers}
+\paragraph{\href{The \cmd{ipcserver} program}{ipcserver.html}}
+\paragraph{\href{The \cmd{ipcrules} program}{ipcrules.html}}
+\paragraph{\href{The \cmd{ipcrulescheck} program}{ipcrulescheck.html}}
+
+\paragraph{\href{The \cmd{ipcexec} program}{ipcexec.html}}
+\paragraph{\href{The \cmd{ipcexecrules} program}{ipcexecrules.html}}
+\paragraph{\href{The \cmd{ipcexecrulescheck} program}{ipcexecrulescheck.html}}
+\paragraph{\href{The \cmd{ipcexec-config} program}{ipcexec-config.html}}
+
+\subsubsection{Clients}
+\paragraph{\href{The \cmd{ipcclient} program}{ipcclient.html}}
+\paragraph{\href{The \cmd{ipccat} program}{ipccat.html}}
+\paragraph{\href{The \cmd{ipcconnect} program}{ipcconnect.html}}
+
+\paragraph{\href{The \cmd{ipccommand} program}{ipccommand.html}}
+\paragraph{\href{The \cmd{ipcdo} program}{ipcdo.html}}
+\paragraph{\href{The \cmd{ipcrun} program}{ipcrun.html}}
+
+\subsubsection{Preforking Servers}
+\paragraph{\href{Compiling an \cmd{ipchandle} server}{ipchandle.html}}
+\paragraph{\href{The \cmd{ipcperl} program}{ipcperl.html}}
+
+\subsubsection{General Information}
+\paragraph{\href{The ucspi-ipc environment variables}{environment.html}}
+\paragraph{\href{The ucspi-ipc protocol description}{UCSPI-IPC}}
+
+\paragraph{\href{\cmd{getpeereid}}{getpeereid.html}}
+\paragraph{\href{A mailing list for ucspi-ipc and general ucspi discussion}{../lists.html#ucspi}}
+
+
+\subsection{What is ucspi-ipc?}
+\cmd{ipcserver} and \cmd{ipcclient} are command-line tools for
+building local-domain client-server applications.  They conform to the
+UNIX Client-Server Program Interface,
+\href{UCSPI}{http://cr.yp.to/proto/ucspi.txt}.
+
+\cmd{ipcserver} listens for connections on a local-domain
+stream socket, and runs a program for each connection it accepts.  The
+program environment includes variables that hold the local and remote
+socket addresses, and the effective user and group IDs of the process
+that called \cmd{connect}.  \cmd{ipcserver} offers a concurrency limit
+on acceptance of new connections, and selective handling of
+connections based on client identity.
+
+\cmd{ipcclient} requests a connection to a local-domain socket,
+and runs a program.  The program environment includes a variable that
+holds the local socket address.
+
+\cmd{ipcperl} is an example of an \href{\cmd{ipchandle}}{ipchandle.html}
+server.  It invokes a perl subroutine for each request.
+
+\subsection{Features}
+A service running as a privileged user under \cmd{ipcserver} can perform tasks
+on behalf of nonprivileged users without setuid programs.  Clients user and
+group IDs are known to the server can be logged.  Access to any service is
+configurable through a standard, simple mechanism, based on the client user and
+group ID.
+
+\subsection{Operating System Support}
+The ucspi-ipc package requires an implementation of \cmd{getpeereid}.
+Recent Linux kernels offer sufficient basis for \cmd{getpeereid}.
+Various operating systems implement a \cmd{getpeereid} system call,
+including OpenBSD~3.0, FreeBSD~4.6, and AIX~5L.
+
+\href{Patches}{../patches/intro.html} to add a \cmd{getpeereid} system
+call are available for several operating systems.
+
+
+\subsection{Related Software}
+D.J. Bernstein created the UCSPI framework and wrote
+\href{ucspi-tcp}{http://cr.yp.to/ucspi-tcp.html}.
+
+Bruce Guenter has a protocol and package similar to ucspi-ipc called
+\href{ucspi-unix}{http://untroubled.org/ucspi-unix/}
+\end{document}
+

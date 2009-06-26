@@ -1,0 +1,93 @@
+\documentclass{book}
+\usepackage{sstdef}
+\title{ucspi-ipc}
+
+\begin{document}
+
+\section{How to install \package}
+
+\package{} comes with NO WARRANTY.
+
+\subsection{System requirements}
+\package{} works only under UNIX.  In addition, \package{} requires
+an implementation of \href{\cmd{getpeereid}}{getpeereid.html}.
+
+This package implements \cmd{getpeereid} for recent Linux kernels.
+Some systems offer \cmd{gepeereid} as system call, including
+\href{OpenBSD~3.0}{http://www.openbsd.org},
+\href{FreeBSD~4.6}{http://www.freebsd.org} and
+\href{AIX~5L}{http://www-1.ibm.com/servers/aix/index.html}.
+Several \href{patches}{../patches/intro.html} are also available to add
+a \cmd{getpeereid} system call to older BSD operating system versions.
+
+On systems that lack \cmd{getpeereid}, \package{} runs, but
+\href{\cmd{ipcserver}}{ipcserver.html} generates an error if \cmd{getpeereid}
+is called, i.e. when invoked without the \cmd{-P} switch.  The package
+regression tests fail on platforms without \cmd{getpeereid}.
+
+\subsection{Installation}
+If necessary, create a \cmd{/package} directory:
+\begin{code}%
+  mkdir /package
+  chmod 1755 /package
+  cd /package
+\end{code}
+
+Download the \package{} package.  The most recent \package{} package is
+\href{\package~\version}{\package-\version.tar.gz}.  Unpack \package{} in
+\cmd{/package}:
+\begin{code}%
+  gunzip \package-\version.tar
+  tar -xpf \package-\version.tar
+  rm \package-\version.tar
+  cd host/superscript.com/net/\package-\version
+\end{code}
+
+Compile the package:
+\begin{code}%
+  package/compile
+\end{code}
+
+Run some tests:
+\begin{code}%
+  package/rts
+\end{code}
+The output should be empty.  Tests will fail on systems that lack
+\cmd{getpeereid} support.
+
+Install the package:
+\begin{code}%
+  package/install
+\end{code}
+
+Commands are installed in the
+\cmd{/package/host/superscript.com/command} directory.
+For compatibility with prior versions, commands are also installed in
+the \cmd{/usr/local/bin} directory.
+
+Report successful installation:
+\begin{code}%
+  package/report
+\end{code}
+
+
+\subsection{Package subsets}
+To restrict the compile or install to a subset of the entire package,
+supply the name of a subset on the command line:
+\begin{code}%
+  package/compile \var{subset}
+  package/rts \var{subset}
+  package/install \var{subset}
+\end{code}
+
+To exclude a subset from an operation, add a hyphen as the first
+command-line argument:
+\begin{code}%
+  package/compile - \var{subset}
+  package/rts - \var{subset}
+  package/install - \var{subset}
+\end{code}
+
+Valid subsets in this package are \cmd{base} and \cmd{ipcperl}.
+\end{document}
+

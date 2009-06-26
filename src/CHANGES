@@ -1,0 +1,107 @@
+20000624
+	Test for getpeereid syscall.
+	version: 0.51
+
+20000625
+	added choosing
+	cleaner getpeereid tests
+	version: 0.52
+
+20000707
+	ipcserver: clear umask for bind (Bruce Guenter).
+	Stevens says this matters in Posix.1g.
+	Has anybody seen it?
+	version: 0.53
+
+20000709
+	Delete ipc_recv.c, ipc_recv.c, ipc_datagram.c.
+	Revise ipc interface.
+	Correction from Bruce Guenter: umask does affect Linux bind.
+	Remove rts-tmp after testing.
+	version: 0.54
+
+20000720
+	Add ipcconnect.
+
+20000728
+	Test for SO_PEERCRED.
+
+20000729
+	Clean up getpeereid.
+	Port getpeereid to FreeBSD.
+	version: 0.55
+
+20011202
+	Initialize sockaddr_un structure in ipc_local.c (Shinya Ohira).
+	Correct variable names in trygpid.c (Shinya Ohira).
+	Port getpeereid to OpenBSD 2.9.
+	version: 0.56
+
+20020310
+	Added ipcexec, ipcdo, ipcrun, ipccommand, ipcexecrules,
+	ipcexecrulescheck, ipcexec-config.
+	version: 0.57
+
+
+20021102
+	Initialize sockaddr_un structure in ipc_accept.c (Sami Farin).
+	Port to current package structure.
+	General cleanup.
+	Added ipchandle.
+	version: 0.60
+
+20030128
+	Add missing ipchandle option: -f.
+	Correct argc decrement.
+
+20030130
+	ipchandle.c: read/write -> buffer_unixread/buffer_unixwrite
+	Offer selective compile and install.
+	Add <errno.h> to error.h to appease linux.
+	version: 0.61
+
+20030205
+	Eliminate env_add.c.
+
+20030213
+	ipcclient.c: correct typo in PROTO environment variable (Lars Uffmann).
+
+20030220
+	ipchandle.c: set PROTO environment variable, detect changed environ.
+
+20030302
+	ipcperl.c: rectify environment handling.
+	version: 0.62
+
+20030430
+	ipchandle.c: clear flagdeny for each connection.
+	version: 0.63
+
+20050212
+	Add compatibility macros for older Perl.
+	Don't leak pointer returned from eval_pv.
+
+20050219
+	Don't fail on setsid if already group leader (Gabriel Russell).
+
+20050308
+	Test with relative paths.
+
+20050331
+	Support partial compilation and testing.
+	Replace trunc with lop to avoid builtin conflict.
+	Avoid daemontools in rts.
+
+20050417
+	Completely generic package/ scripts.
+
+20050430
+	Stop Perl 5.8.5 from warning about freeing temporaries.
+	version: 0.65
+
+20050515
+	Partial-install bug fix in package/upgrade.
+	version: 0.66
+
+20050610
+	Close socket for deny rule (Fred Lindberg).

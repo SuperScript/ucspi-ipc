@@ -1,0 +1,4 @@
+ipchandler: initialization function separate from server function
+rules with lists of requester IDs.
+rules with server determining ID.
+

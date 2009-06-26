@@ -1,0 +1,88 @@
+\documentclass{book}
+\usepackage{sstdef}
+\title{ucspi-ipc}
+
+\begin{document}
+
+\section{The \cmd{ipcserver} program}
+
+\subsection{Usage}
+\begin{code}%
+  ipcserver \var{opts} \var{path} \var{prog}
+\end{code}
+where \cvar{opts} is a series of \cmd{getopt}-style options,
+\cvar{path} is a filename to use as the address of the the
+local-domain socket, and \cvar{prog} is one or more arguments
+specifying a program to run for each accepted connection.
+
+\cmd{ipcserver} listens for connections from local-domain clients.
+For each connection, it runs \cvar{prog}, with descriptor 0 reading
+from the network and descriptor 1 writing to the network.  Before
+running \cvar{prog}, \cmd{ipcserver} sets certain
+\href{environment variables}{environment.html}.
+
+\cmd{ipcserver} exits when it receives SIGTERM.
+
+\subsection{Description}
+General Options:
+\begin{itemize}
+\item \cmd{-q}: Quiet.  Do not print error messages.
+\item \cmd{-Q}: (Default.)  Print error messages.
+\item \cmd{-v}: Verbose.  Print error messages and status messages.
+\end{itemize}
+
+Connection options:
+\begin{itemize}
+\item \cmd{-c \var{n}}:  Do not handle more than \cvar{n} simultaneous
+  connections.  If there are \cvar{n} simultaneous connections
+  copies of \cmd{prog} running, defer acceptance of a new
+  connection until one copy finishes.  \cvar{n} must be a positive
+  integer.  The default value is 40.
+
+\item \cmd{-x \var{cdb}}: Follow the rules compiled into \cvar{cdb} by
+  \href{\cmd{ipcrules}}{ipcrules.html}.  These rules may specify setting
+  environment variables or rejecting connections from bad sources.
+  You can rerun \cmd{ipcrules} to change the rules while
+  \cmd{ipcserver} is running.
+
+\item \cmd{-X}: With \cmd{-x \var{cdb}}, allow connections even if \cvar{cdb}
+  does not exist.  Normally \cmd{ipcserver} will drop the
+  connection if \cvar{cdb} does not exist.
+
+\item \cmd{-B \var{banner}}: Write \cvar{banner} to the network
+  immediately after each connection is made.
+
+\item \cmd{-g \var{gid}}: Switch group ID to \cvar{gid} after preparing
+  to receive connections.  \cvar{gid} must be a positive integer.
+
+\item \cmd{-u \var{uid}}: Switch user ID to \cvar{uid} after preparing
+  to receive connections.  \cvar{uid} must be a positive integer.
+
+\item \cmd{-U}: Same as \cmd{-g \$GID -u \$UID}.  Typically, \cmd{\$GID} and
+  \cmd{\$UID} are set by
+  \href{\cmd{envuidgid}}{http://cr.yp.to/daemontools/envuidgid.html}.
+
+\item \cmd{-b \var{n}}: Allow a backlog of approximately \cvar{n}
+  pending connections.
+
+\item \cmd{-d}: (Default.) Delete \cvar{path} before binding it to a socket.
+
+\item \cmd{-D}: No not delete \cvar{path} before binding it to a socket.
+\end{itemize}
+
+Data-gathering options:
+\begin{itemize}
+\item \cmd{-l \var{localpath}}: Do not look up the path bound to the local socket;
+use \cvar{localpath} for the environment variable \cmd{\$IPCLOCALPATH}.
+
+\item \cmd{-p}: (Default.) Look up the peer's effective user and group
+IDs.  Put the results in the environment variables \cmd{\$IPCREMOTEEUID}
+and \cmd{\$IPCREMOTEEGID}.
+
+\item \cmd{-P}: Do not look up the peer's effective user and group
+IDs.  Unset the environment variables \cmd{\$IPCREMOTEEUID}
+and \cmd{\$IPCREMOTEEGID}.
+\end{itemize}
+
+\end{document}
+

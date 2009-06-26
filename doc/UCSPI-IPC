@@ -1,0 +1,29 @@
+IPC UCSPI protocol definition
+Copyright 2000
+SuperScript Technology, Inc.  sst@superscript.com
+
+This document defines the IPC protocol for UCSPI-1996 tools. An IPC
+client communicates with a IPC server on the same machine through a
+local-domain stream socket. The descriptors passed to an UCSPI
+application are copies of that socket, dup()ed from a single connect()
+or accept().  On the server side, the remote effective user and group
+IDs reflect the process that called connect().
+
+[address] consists of one argument: [path].
+
+A [path] is a file name associated with a local-domain socket.
+
+The server sets up the following environment variables:
+
+   PROTO: the string IPC
+   IPCLOCALPATH: the local path identifying the local-domain socket
+   IPCREMOTEPATH: the remote path identifying the local-domain socket
+   IPCREMOTEEUID: the remote effective user ID
+   IPCREMOTEEGID: the remote effective group ID
+
+The client sets up the following environment variables:
+
+   PROTO: the string IPC
+   IPCLOCALPATH: the local path identifying the local-domain socket
+
+

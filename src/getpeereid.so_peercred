@@ -1,0 +1,17 @@
+/* sysdep: +SO_PEERCRED */
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <sys/un.h>
+#include "getpeereid.h"
+
+int getpeereid(int s,uid_t *u,gid_t *g)
+{
+  struct ucred dummy = {0};
+  int len = sizeof(dummy);
+
+  if (getsockopt(s,SOL_SOCKET,SO_PEERCRED,&dummy,&len) == -1)
+    return -1;
+  *u = dummy.uid;
+  *g = dummy.gid;
+  return 0;
+}

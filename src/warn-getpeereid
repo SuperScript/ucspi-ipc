@@ -1,0 +1,4 @@
+Oops. Your system does not support getpeereid(); this means that a
+local-domain server cannot obtain credentials for clients.  You or
+your vendor must add support for getpeereid() before you can compile
+programs from the UCSPI-IPC package.

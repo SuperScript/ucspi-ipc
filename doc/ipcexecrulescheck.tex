@@ -1,0 +1,19 @@
+\documentclass{book}
+\usepackage{sstdef}
+\title{ucspi-ipc}
+
+\begin{document}
+
+\section{The \cmd{ipcexecrulescheck} program}
+
+\subsection{Interface}
+\begin{code}%
+  ipcexecrulescheck \var{cdb}
+\end{code}
+where \cvar{cdb} is the name of the cdb-format file created with
+\cmd{ipcexecrules}.  \cmd{ipcexecrulescheck} says what \cvar{cdb} will
+direct \cmd{ipcexec} to do with a request from a process with effective
+user ID \cmd{\$IPCREMOTEEUID} and effective group ID
+\cmd{\$IPCREMOTEEGID} to run \cmd{\$IPCCOMMAND} as user ID
+\cmd{\$IPCUID}.
+\end{document}

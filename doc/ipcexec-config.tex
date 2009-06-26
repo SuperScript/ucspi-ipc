@@ -1,0 +1,32 @@
+\documentclass{book}
+\usepackage{sstdef}
+\title{shttpd}
+
+\begin{document}
+
+\section{The \cmd{ipcexec-config} program}
+
+\subsection{Interface}
+\begin{code}%
+  ipcexec-config \var{user} \var{loguser} \var{dir}
+\end{code}
+where \cvar{user} and \cvar{loguser} are system account names,
+and \cvar{dir} is an absolute path name.
+
+\cmd{ipcexec-config} creates the directory \cvar{dir} as an
+\href{svscan}{http://cr.yp.to/daemontools/svscan.html}-format service
+directory, configured to run \cmd{ipcexec}, running \cmd{ipcexec} as \cvar{user}
+and creating log files as \cvar{loguser}.
+
+\cmd{ipcexec-config} creates the directory \cmd{\var{dir}/env}
+containing files that establish runtime environment variables for
+\cmd{ipcexec} via \href{envdir}{http://cr.yp.to/daemontools/envdir.html}.
+
+\cmd{ipcexec-config} creates the directory \cmd{\var{dir}/rules} to hold rules
+for the \cmd{ipcexec} server.
+
+\cmd{ipcexec-config} creates \cmd{\var{dir}/rules/Makefile} for compiling
+\cmd{\var{dir}/rules/data.cdb} with \href{\cmd{ipcexecrules}}{ipcexecrules.html}.
+
+
+\end{document}

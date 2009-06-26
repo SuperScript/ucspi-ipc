@@ -1,0 +1,41 @@
+--- ipcperl works
+perlembedHello, World! (1): here you are
+IPCLOCALPATH => Local
+IPCNEW => set within ipcperl
+IPCREMOTEEGID => x
+IPCREMOTEEUID => x
+IPCREMOTEPATH => 
+0
+perlembedHello, World! (2): here you are
+IPCLOCALPATH => Local
+IPCNEW => set within ipcperl
+IPCREMOTEEGID => x
+IPCREMOTEEUID => x
+IPCREMOTEPATH => 
+0
+perlembedHello, World! (1): here you are
+IPCLOCALPATH => Local
+IPCNEW => set within ipcperl
+IPCREMOTEEGID => x
+IPCREMOTEEUID => x
+IPCREMOTEPATH => 
+0
+--- ipcperl -v prints proper messages
+./ipcperl: status: 0/1
+./ipcperl: status: 1/1
+./ipcperl: pid x from 
+ipcserver: ok x Local :UID,GID
+log: Hello, World! (1): here you are
+./ipcperl: done x
+./ipcperl: pid x from 
+ipcserver: ok x Local :UID,GID
+log: Hello, World! (2): here you are
+./ipcperl: end x status 256
+./ipcperl: status: 0/1
+./ipcperl: status: 1/1
+./ipcperl: pid x from 
+ipcserver: ok x Local :UID,GID
+log: Hello, World! (1): here you are
+./ipcperl: done x
+./ipcperl: end x status 15
+./ipcperl: status: 0/1

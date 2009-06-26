@@ -1,0 +1,55 @@
+#!/bin/sh
+#
+# tests for ipcperl
+
+rm -rf rts-tmp
+mkdir rts-tmp
+service=./rts-tmp
+socks="$service/s"
+testuid=`getuid`
+testgid=`getgid`
+
+echo '--- ipcperl works'
+echo 'package Embedded::test;
+my $n = 0;
+$| = 1;
+sub server () {
+  ++$n;
+
+  $ENV{IPCNEW} = "set within ipcperl";
+  print STDERR "log: Hello, World! ($n): @_\n";
+  print "Hello, World! ($n): @_\n";
+  print map("$_ => $ENV{$_}\n" => sort grep(/^IPC/ => keys %ENV));
+
+  $n > 1  and  exit(1);
+}
+1;
+' > $service/hello.pm
+
+./ipcperl \
+-c1 -Bperlembed -v -Xx rules.cdb -l Local -b 2 \
+$socks $service/hello.pm 'Embedded::test::server' here you are \
+>$service/log1 2>&1 &
+run1=$!
+sleep 2
+
+{ ./ipcclient -l Local $socks sh -c 'cat <&6'
+  echo $?
+  sleep 1
+  ./ipcclient -l Local $socks sh -c 'cat <&6'
+  echo $?
+  sleep 1
+  ./ipcclient -l Local $socks sh -c 'cat <&6'
+  echo $?
+  sleep 1
+} | sed -e 's/^PATH => .*/PATH => .../' -e 's/ID => .*/ID => x/'
+
+kill -TERM $run1
+wait $run1
+
+echo '--- ipcperl -v prints proper messages'
+cat $service/log1 \
+  | sed -e "s/:$testuid,$testgid/:UID,GID/"  -e 's/ [0-9]* / x /' \
+    -e 's|from /[^:]*$|from x|'  -e 's|Local /[^:]*:|Local x:|' \
+    -e 's/done [0-9]*$/done x/'
+

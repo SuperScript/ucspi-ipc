@@ -1,0 +1,348 @@
+--- ipcclient prints usage message without enough arguments
+ipcclient: usage: ipcclient [ -qQv ] [ -p localpath ] [ -l localname ] path program
+100
+--- ipcclient prints error message for nonexistent path
+ipcclient: unable to connect to ./rts-tmp/nonexistentdir/client: ...
+111
+--- ipcclient prints error message for nonsocket path
+ipcclient: unable to connect to ./rts-tmp/nonsocket: ...
+111
+--- ipcclient understands relative path
+ipcclient: unable to connect to ...: ...
+111
+--- ipcclient prints error message with invalid path
+ipcclient: unable to connect to thislabelistoolongbecausetheunixdomainhasalimitofapproximatelyonehundredcharactersinasocketpathwhosebrightideawasittousevariablelengthaddressesinthefirstplacetheyshouldhaveknownbetter.: protocol error
+111
+--- ipcserver prints usage message without enough arguments
+ipcserver: usage: ipcserver [ -UXhHoOdDqQvpP ] [ -c limit ] [ -x rules.cdb ] [ -B banner ] [ -g gid ] [ -u uid ] [ -b backlog ] [ -l localname ] path program
+100
+--- ipcclient prints error message
+ipcclient: unable to connect to ...: ...
+111
+--- ipcclient -q does not print error message
+111
+--- ipcserver prints error message with unknown socket directory
+ipcserver: fatal: unable to bind: ...
+111
+--- ipcserver prints error message with invalid socket name
+ipcserver: fatal: unable to bind: protocol error
+111
+--- ipcserver sets basic environment variables
+bannerPROTO=IPC
+IPCLOCALPATH=Local
+IPCREMOTEEUID=UID
+IPCREMOTEEGID=GID
+IPCREMOTEPATH=
+0
+--- ipcclient sets basic environment variables
+PROTO=IPC
+IPCLOCALPATH=
+IPCREMOTEEUID=unset
+IPCREMOTEEGID=unset
+IPCREMOTEPATH=unset
+bannerPROTO=IPC
+IPCLOCALPATH=Local
+IPCREMOTEEUID=UID
+IPCREMOTEEGID=GID
+IPCREMOTEPATH=
+0
+--- ipcclient understands -l
+PROTO=IPC
+IPCLOCALPATH=Local
+IPCREMOTEEUID=unset
+IPCREMOTEEGID=unset
+IPCREMOTEPATH=unset
+bannerPROTO=IPC
+IPCLOCALPATH=Local
+IPCREMOTEEUID=UID
+IPCREMOTEEGID=GID
+IPCREMOTEPATH=
+0
+--- ipcclient understands -p
+bannerPROTO=IPC
+IPCLOCALPATH=Local
+IPCREMOTEEUID=UID
+IPCREMOTEEGID=GID
+IPCREMOTEPATH=./rts-tmp/clientsock
+0
+--- ipcclient prints error message with used path
+ipcclient: fatal: unable to bind: address already used
+111
+--- ipcclient -q does not print error message with used path
+111
+--- ipcclient -v works
+ipcclient: connected to ...
+ok
+0
+--- ipcserver prints error message with used path
+ipcserver: fatal: unable to bind: address already used
+111
+--- ipccat works
+bannerPROTO=IPC
+IPCLOCALPATH=Local
+IPCREMOTEPATH=
+0
+--- ipcconnect works
+bannerhello there
+0
+--- ipcrules prints usage message without enough arguments
+ipcrules: usage: ipcrules rules.cdb rules.tmp
+100
+--- ipcrules prints error message if it cannot create tmp
+ipcrules: fatal: unable to create /dev/nonexistent/tmp: file does not exist
+111
+--- ipcrules prints error message if it cannot move tmp to cdb
+ipcrules: fatal: unable to move ./rts-tmp/test.tmp to /dev/nonexistent/cdb: file does not exist
+111
+--- ipcrules creates a cdb file
+0
+--- ipcrulescheck sees deny
+rule 0:
+deny connection
+0
+--- ipcrulescheck does not apply deny to another user.group
+default:
+allow connection
+0
+--- ipcrules replaces a cdb file
+0
+--- ipcrulescheck finds rule with euid and egid
+rule 0.1:
+set environment variable which=first
+allow connection
+0
+--- ipcrulescheck finds rule with euid
+rule 0:
+set environment variable which=second
+allow connection
+0
+--- ipcrulescheck finds rule with egid
+rule .1:
+set environment variable which=third
+allow connection
+0
+--- ipcrulescheck finds default rule
+rule :
+set environment variable which=fourth
+allow connection
+0
+--- ipcrules handles comments, address ranges, multiple variables
+0
+rule 0:
+set environment variable which=first
+set environment variable where=whatever
+allow connection
+rule 1:
+set environment variable which=first
+set environment variable where=whatever
+allow connection
+rule 2:
+set environment variable which=first
+set environment variable where=whatever
+allow connection
+rule 3:
+set environment variable which=first
+set environment variable where=whatever
+allow connection
+rule 4:
+set environment variable which=first
+set environment variable where=whatever
+allow connection
+rule 5:
+set environment variable which=first
+set environment variable where=whatever
+allow connection
+default:
+allow connection
+default:
+allow connection
+default:
+allow connection
+default:
+allow connection
+default:
+allow connection
+--- ipcrulescheck finds the proper rules in the proper order
+0
+rule 86.75:
+set environment variable which=first
+allow connection
+rule 86.76:
+set environment variable which=second
+allow connection
+rule 86:
+set environment variable which=third
+allow connection
+rule .75:
+set environment variable which=fourth
+allow connection
+rule :
+set environment variable which=sixth
+allow connection
+rule 86:
+set environment variable which=third
+allow connection
+rule :
+set environment variable which=sixth
+allow connection
+rule .75:
+set environment variable which=fourth
+allow connection
+rule :
+set environment variable which=sixth
+allow connection
+rule :
+set environment variable which=sixth
+allow connection
+--- ipcexecrulescheck finds the proper rules in the proper order
+0
+rule 86.75,0.test:
+set environment variable which=first,test
+allow connection
+rule 86.76,0.test:
+set environment variable which=second,test
+allow connection
+rule 86,0.test:
+set environment variable which=third,test
+allow connection
+rule .75,0.test:
+set environment variable which=fourth,test
+allow connection
+rule ,0.test:
+set environment variable which=sixth,test
+allow connection
+rule :
+deny connection
+rule 86,0.test:
+set environment variable which=third,test
+allow connection
+rule ,0.test:
+set environment variable which=sixth,test
+allow connection
+rule .75,0.test:
+set environment variable which=fourth,test
+allow connection
+rule ,0.test:
+set environment variable which=sixth,test
+allow connection
+rule ,0.test:
+set environment variable which=sixth,test
+allow connection
+--- ipcserver works with -P
+bannerPROTO=IPC
+IPCLOCALPATH=Local
+IPCREMOTEEUID=unset
+IPCREMOTEEGID=unset
+IPCREMOTEPATH=
+0
+--- ipcserver prints proper messages
+log1
+ipcserver -Pp
+ipcserver: status: 0/2
+ipcserver: status: 1/2
+ipcserver: pid x from 
+ipcserver: ok x Local :UID,GID
+ipcserver: end x status 0
+ipcserver: status: 0/2
+ipcserver: status: 1/2
+ipcserver: pid x from 
+ipcserver: ok x Local :UID,GID
+ipcserver: end x status 0
+ipcserver: status: 0/2
+ipcserver: status: 1/2
+ipcserver: pid x from 
+ipcserver: ok x Local :UID,GID
+ipcserver: end x status 0
+ipcserver: status: 0/2
+ipcserver: status: 1/2
+ipcserver: pid x from ./rts-tmp/clientsock
+ipcserver: ok x Local ./rts-tmp/clientsock:UID,GID
+ipcserver: end x status 0
+ipcserver: status: 0/2
+ipcserver: status: 1/2
+ipcserver: pid x from 
+ipcserver: ok x Local :UID,GID
+ipcserver: end x status 0
+ipcserver: status: 0/2
+ipcserver: status: 1/2
+ipcserver: pid x from 
+ipcserver: ok x Local :UID,GID
+ipcserver: end x status 0
+ipcserver: status: 0/2
+ipcserver -P
+ipcserver: status: 0/2
+ipcserver: status: 1/2
+ipcserver: pid x from 
+ipcserver: ok x Local :UID,GID
+ipcserver: end x status 0
+ipcserver: status: 0/2
+log4
+ipcserver: status: 0/2
+ipcserver: status: 1/2
+ipcserver: pid x from 
+ipcserver: ok x Local :UID,GID
+ipcserver: end x status 0
+ipcserver: status: 0/2
+--- ipcexec works
+ipcexec: ok .,0.echo
+hereur
+--- ipccommand works
+ipcexechereur
+--- ipcserver prints proper messages
+log2
+ipcserver: status: 0/2
+ipcserver: status: 1/2
+ipcserver: pid x from 
+ipcserver: ok x Local :UID,GID
+ipcexec: x.x,0.echo
+ipcserver: end x status 0
+ipcserver: status: 0/2
+--- ipcprint prints usage message without enough arguments
+./ipcprint: usage: ./ipcprint [ -UXhHoOdDqQvpP ] [ -c limit ] [ -x rules.cdb ] [ -B banner ] [ -g gid ] [ -u uid ] [ -b backlog ] [ -l localname ] [ -f lockfile ] path
+100
+--- ipcprint sets basic environment variables
+ipcprint
+PROTO=IPC
+IPCLOCALPATH=Local
+IPCREMOTEPATH=
+IPCREMOTEEUID=UID
+IPCREMOTEEGID=GID
+0
+--- ipcprint exits when environment changes
+ipcprint
+PROTO=IPC
+IPCLOCALPATH=Local
+IPCREMOTEPATH=
+IPCREMOTEEUID=UID
+IPCREMOTEEGID=GID
+0
+--- ipcprint works with -P
+ipcprint
+PROTO=IPC
+IPCLOCALPATH=Local
+IPCREMOTEPATH=
+IPCREMOTEEUID=unset
+IPCREMOTEEGID=unset
+0
+--- ipcprint prints proper messages
+log3
+./ipcprint: status: 0/1
+./ipcprint: status: 1/1
+./ipcprint: pid x from 
+ipcserver: ok x Local :UID,GID
+./ipcprint: done x
+./ipcprint: pid x from 
+ipcserver: ok x Local :UID,GID
+./ipcprint: warning: dropping connection, environ changed
+./ipcprint: end x status 28416
+./ipcprint: status: 0/1
+./ipcprint: status: 1/1
+./ipcprint: end x status 15
+./ipcprint: status: 0/1
+./ipcprint: status: 0/1
+./ipcprint: status: 1/1
+./ipcprint: pid x from 
+ipcserver: ok x Local :UID,GID
+./ipcprint: done x
+./ipcprint: end x status 15
+./ipcprint: status: 0/1

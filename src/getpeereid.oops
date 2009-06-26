@@ -1,0 +1,8 @@
+/* sysdep: -getpeereid */
+#include "strerr.h"
+#include "getpeereid.h"
+
+int getpeereid(int s,uid_t *u,gid_t *g)
+{
+  strerr_die1(100,"getpeereid: fatal: your system lacks getpeereid",0);
+}
