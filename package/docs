@@ -3,7 +3,7 @@ shout() { echo "package/docs: $@" >&2; }
 barf() { shout "fatal: $@"; exit 111; }
 safe() { "$@" || barf "cannot $@"; }
 usage() {
-  shout "usage: package/docs [ --help -v N ] [ target ... ]"
+  shout "usage: package/docs [ --help -v N -f ] [ target ... ]"
   exit 100
 }
 ####
@@ -15,16 +15,31 @@ here=`env - PATH=$PATH pwd`
 [ "$1" = "--help" ] && usage
 #
 verbose="1"
-if [ "$1" = "-v" ]
-then
-  shift
-  verbose="$1"
-  shift
-fi
+force=""
+while [ $# -gt 0 ]
+do
+  case "$1" in
+    -v)
+      shift
+      verbose="$1"
+      shift
+      ;;
+    -f)
+      shift
+      force="-f"
+      ;;
+    -*)
+      usage
+      ;;
+    *)
+      break
+      ;;
+  esac
+done
 #
 if [ $# -gt 0 ]
 then
-  safe package/build-run compile-doc doc build "$@"
+  safe package/build-run -v "$verbose" $force compile-doc doc build "$@"
   safe package/build-command html compile-doc `awk '
     BEGIN {
       for (i = 1;i < ARGC; ++i)
@@ -34,7 +49,7 @@ then
     { if (file[$1]) print $1 }
   ' "$@" < package/html`
 else
-  safe package/build-run compile-doc doc build it
+  safe package/build-run -v "$verbose" $force compile-doc doc build it
   safe package/build-command html compile-doc `cat package/html`
 fi
 exit 0

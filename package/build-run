@@ -3,7 +3,7 @@ shout() { echo "package/build-run: $@" >&2; }
 barf() { shout "fatal: $@"; exit 111; }
 safe() { "$@" || barf "cannot $@"; }
 usage() {
-  shout "usage: package/build-run [ --help -v N -f ] compile src mode target ..."
+  shout "usage: package/build-run [ --help -v N -f ] compile src mode [ target ... ]"
   exit 100
 }
 ####
@@ -29,7 +29,6 @@ do
       ;;
   esac
 done
-[ "$1" = "--help" ] && usage
 #####
 # NB: May have no targets.
 [ $# -ge 3 ] || usage
@@ -46,7 +45,27 @@ here=`env - PATH=$PATH pwd`
 PATH="$here/$compile:/command:$PATH"
 export PATH
 #
+# Remove forced rebuild targets.
 safe mkdir -p "$compile"
+#
+if [ "X" != "X$force" ]
+then
+  if [ $# -gt 0 ]
+  then
+    ( safe cd "$compile"
+      for target in ${1+"$@"}
+      do
+	safe "$here/package/build-uptodate" -v $verbose remove $target
+	safe rm -f -- "$target"
+      done
+    )
+  else
+    # Remove entire compile directory.
+    safe rm -fr -- "$compile"
+    safe mkdir -p "$compile"
+  fi
+fi
+#
 safe package/build-linksrc "$compile" "$src"
 safe cd "$compile"
 #
