@@ -1,6 +1,7 @@
 IPC UCSPI protocol definition
 Copyright 2000
 SuperScript Technology, Inc.  sst@superscript.com
+This document may be reproduced and distributed freely without modification.
 
 This document defines the IPC protocol for UCSPI-1996 tools. An IPC
 client communicates with a IPC server on the same machine through a

@@ -20,10 +20,10 @@ ucspi-ipc uses \cmd{getpeereid} to obtain client credentials.  Unless
 your operating system supports an implementation of \cmd{getpeereid},
 you cannot use ucspi-ipc.
 
-\subsection{\cmd{getpeereid}}
-<pre>
+\subsection{Prototype}
+\begin{code}%
   int getpeereid(int \var{s},uid_t *\var{u},gid_t *\var{g});
-</pre>
+\end{code}
 
 \cvar{s} is the result of a successful \cmd{accept} on a local-domain
 stream socket.
@@ -44,7 +44,7 @@ Various systems offer a \cmd{gepeereid} system call, including
 \href{FreeBSD~4.6}{http://www.freebsd.org}, and
 \href{AIX~5L}{http://www-1.ibm.com/servers/aix/index.html}.
 
-Experimental operating system \href{patches}{../patches/intro.html}
+Experimental operating system \href{patches}{../patches/index.html}
 that add a \cmd{getpeereid} system call are available for several BSD
 variants.
 

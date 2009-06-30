@@ -39,21 +39,21 @@ Edit the following files in \cmd{src/} as necessary for your
 installation.  Unless you use modules that require \cmd{xs} support or a
 nonstandard version of perl, the defaults should suffice.
 \begin{itemize}
-\item\bf{\cmd{ipcperl.c}}
+\item\cmd{ipcperl.c}
   If your server uses a module like \cmd{DBI.pm} you may need to add the
   requisite \cmd{xs} code.
 
-\item\bf{\cmd{conf-ldperl}}
+\item\cmd{conf-ldperl}
   Determine options required to load \cmd{ipcperl}.  By default,
   these are calculated automatically.  Using \cmd{xs} code in
   \cmd{src/ipcperl.c} may require manual option setting in
   \cmd{src/conf-ldperl}.
 
-\item\bf{\cmd{conf-ccperl}}
+\item\cmd{conf-ccperl}
   Determine options required to compile \cmd{ipcperl}.  By default,
   these are calculated automatically.
 
-\item\bf{\cmd{conf-perl}}
+\item\cmd{conf-perl}
   How to invoke perl to calculate options automatically in
   \cmd{conf-ccperl} and \cmd{conf-ldperl}.
 \end{itemize}
