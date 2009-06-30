@@ -1,6 +1,6 @@
 \documentclass{book}
 \usepackage{sstdef}
-\title{ucspi-ipcperl}
+\title{ipcperl}
 
 \begin{document}
 
@@ -61,12 +61,12 @@ nonstandard version of perl, the defaults should suffice.
 
 \subsection{Known Problems}
 
-CDB\string_File: iterative lookups succeed but random lookups fail.
+CDB\_File: iterative lookups succeed but random lookups fail.
 Each \cmd{ipchandle} server uses the original
 \href{cdb}{http://cr.yp.to/cdb.html} library for access control.  The 
-\href{CDB_File-0.92}{http://search.cpan.org/author/MSERGEANT/CDB_File-0.92}
-package redefines \cmd{cdb\string_findnext} without declaring it static.  The
+\href{CDB\_File-0.92}{http://search.cpan.org/author/MSERGEANT/CDB_File-0.92}
+package redefines \cmd{cdb_findnext} without declaring it static.  The
 linker may select the wrong definition.  Solution: add \cmd{static} to
-the declaration of \cmd{cdb\string_findnext} in CDB\string_File.xs.
+the declaration of \cmd{cdb_findnext} in CDB\_File.xs.
 
 \end{document}

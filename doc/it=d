@@ -1,7 +1,4 @@
 UCSPI-IPC
-default.build
-default.css.build
-default.html.build
 environment.html
 getpeereid.html
 index.html
@@ -22,7 +19,6 @@ ipcrules.html
 ipcrulescheck.html
 ipcrun.html
 ipcserver.html
-sstpackage.sty.build
 environment.css
 getpeereid.css
 index.css
