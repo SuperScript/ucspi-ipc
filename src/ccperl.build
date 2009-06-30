@@ -1,0 +1,4 @@
+build_ifchanged conf-ccperl conf-perl print-ccperl.sh
+rm -f ccperl
+sh print-ccperl.sh
+exit 0

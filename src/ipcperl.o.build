@@ -1,0 +1,4 @@
+build_ifchanged compile ccperl
+build_dependcc "$2.c"
+echo ./compile "$3" `cat ccperl` "$2.c" >&2
+./compile "$3" `cat ccperl` "$2.c"

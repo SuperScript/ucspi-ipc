@@ -1,0 +1,2 @@
+build_ifchanged auto-str home
+./auto-str auto_home "`head -1 home`"

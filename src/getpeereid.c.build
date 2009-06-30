@@ -1,0 +1,6 @@
+build_ifchanged systype compile load choosing trygpid.c trysopc.c 
+build_ifchanged getpeereid.so_peercred getpeereid.syscall getpeereid.oops
+./choosing c trysopc getpeereid.so_peercred \
+  || ./choosing cl trygpid getpeereid.syscall \
+  || cat getpeereid.oops
+exit 0

@@ -1,0 +1,4 @@
+build_ifchanged compile tryipcpath print-ipcpath.sh
+rm -f ipcpath.h
+sh print-ipcpath.sh
+exit 0

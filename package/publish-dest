@@ -1,2 +1,4 @@
 localhost:html localhost:/home/web/www/www.superscript.com/ucspi-ipc/
 localhost:dist localhost:/home/web/www/www.superscript.com/ucspi-ipc/
+aaa:html aaa:/doc/host/www.superscript.com/ucspi-ipc/
+aaa:dist aaa:/doc/host/www.superscript.com/ucspi-ipc/
