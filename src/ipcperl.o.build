@@ -1,4 +1,4 @@
-build_ifchanged compile ccperl
-build_dependcc "$2.c"
-echo ./compile "$3" `cat ccperl` "$2.c" >&2
-./compile "$3" `cat ccperl` "$2.c"
+cfile="`basename $1 .o`.c"
+build_ifchanged compile ccperl "$cfile"
+build_dependcc "$cfile"
+./compile "$3" `cat ccperl` "$cfile"

@@ -300,17 +300,17 @@ done
 
 [ $verbose -ge 2 ] && shout "args: $*"
 
-## Remove all targets before building anything.
-## Less efficient, but avoids introducing target order dependency.
-#if [ $force -eq 1 ]
-#then
-#  for target in ${1+"$@"}
-#  do
-#    "$home/build-uptodate" -v $verbose -b $db_file remove $target \
-#      || barf "cannot "$home/build-uptodate" -v $verbose -b $db_file remove $target"
-#    safe rm -f -- "$target"
-#  done
-#fi
+# Remove all targets before building anything.
+# Less efficient, but avoids introducing target order dependency.
+if [ $force -eq 1 ]
+then
+  for target in ${1+"$@"}
+  do
+    "$home/build-uptodate" -v "$verbose" -b "$db_file" remove "$target"
+    [ $? -eq 0 ] || barf "cannot $home/build-uptodate -v $verbose -b $db_file remove $target"
+    safe rm -f -- "$target"
+  done
+fi
 
 for target in ${1+"$@"}
 do
