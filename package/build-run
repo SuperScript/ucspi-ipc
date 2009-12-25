@@ -3,17 +3,21 @@ shout() { echo "package/build-run: $@" >&2; }
 barf() { shout "fatal: $@"; exit 111; }
 safe() { "$@" || barf "cannot $@"; }
 usage() {
-  shout "usage: package/build-run [ --help -v N -f ] compile src mode [ target ... ]"
+  shout "usage: package/build-run [ --help -v N -f -F ] compile src mode target ..."
   exit 100
 }
 ####
 verbose="1"
-force=""
+force="0"
 while [ $# -gt 0 ]
 do
   case "$1" in
+    -F)
+      force="2"
+      shift
+      ;;
     -f)
-      force="-f"
+      force="1"
       shift
       ;;
     -v)
@@ -29,6 +33,7 @@ do
       ;;
   esac
 done
+[ "$1" = "--help" ] && usage
 #####
 # NB: May have no targets.
 [ $# -ge 3 ] || usage
@@ -40,55 +45,72 @@ shift; shift; shift
 umask 022
 [ -d package ] || barf "no package directory"
 [ -d "$src"     ] || barf "no $src directory"
+####
+db_file=".build"
 here=`env - PATH=$PATH pwd`
 # FIXME: Still needed?
 PATH="$here/$compile:/command:$PATH"
 export PATH
 #
-# Remove forced rebuild targets.
 safe mkdir -p "$compile"
+[ -d "$compile" ] || barf "no $compile directory"
 #
-if [ "X" != "X$force" ]
+# Must precede build-linksrc call.
+if [ $force -eq 2 ]
 then
-  if [ $# -gt 0 ]
-  then
-    ( safe cd "$compile"
-      for target in ${1+"$@"}
-      do
-	safe "$here/package/build-uptodate" -v $verbose remove $target
-	safe rm -f -- "$target"
-      done
-    )
-  else
-    # Remove entire compile directory.
-    safe rm -fr -- "$compile"
-    safe mkdir -p "$compile"
-  fi
+  rm -r "$compile"
+  safe mkdir -p "$compile"
 fi
-#
+
+safe cd "$compile"
+if [ $force -eq 1 ]
+then
+  for target in ${1+"$@"}
+  do
+    "$here/package/build-uptodate" -v "$verbose" -b "$db_file" remove "$target"
+    [ $? -eq 0 ] || barf "cannot $here/package/build-uptodate -v $verbose -b $db_file remove $target"
+    safe rm -f -- "$target"
+  done
+fi
+
+safe cd "$here"
 safe package/build-linksrc "$compile" "$src"
 safe cd "$compile"
-#
+
+# FIXME: Put list into config file?
+sigprog=""
+if which md5 >/dev/null
+then
+  sigprog="md5 -q"
+else if which md5sum >/dev/null
+then
+  sigprog="md5sum"
+else
+  sigprog="cksum"
+fi fi
+
 if [ -r .build.sig ]
 then
-  :
+  buildsig="`head -1 ./.build.sig`"
+  if [ "$buildsig" != "$sigprog" ]
+  then
+    echo "$sigprog" > .build.sig
+  fi
 else
-  { { which md5 >/dev/null && echo md5 -q; } \
-    || { which md5sum >/dev/null && echo md5sum; } \
-    || echo cksum 
-  } > .build.sig
+  echo "$sigprog" > .build.sig
 fi
-#
-build_cmd="$here/package/build-targ"
-build_opt="-v $verbose $force"
+
 # FIXME: options for make.
 case "$mode" in
   compile)
-    build_cmd="make"
-    build_opt=""
+    safe make ${1+"$@"}
+    ;;
+  build)
+    safe "$here/package/build-targ" -b "$db_file" -v "$verbose" ${1+"$@"}
+    ;;
+  *)
+    barf "unrecognized mode: $mode"
     ;;
 esac
-
-safe "$build_cmd" $build_opt ${1+"$@"}
 
 exit 0
