@@ -25,9 +25,11 @@
 #include "sig.h"
 #include "ndelay.h"
 #include "fork.h"
+#include "lock.h"
 
 int verbosity = 1;
 const char *banner = "";
+const char *self = "ipcaccept";
 
 char remotepath[IPCPATH_MAX + 1];
 char localname[IPCPATH_MAX + 1];
@@ -48,11 +50,13 @@ stralloc tmp = {0};
 char bspace[16];
 buffer b;
 
+const char *lockfile = 0;
+int fdlock;
 
 
 /* ---------------------------- child */
 
-#define DROP "ipcaccept: warning: dropping connection, "
+#define DROP ": warning: dropping connection, "
 
 int flagdeny = 0;
 int flagallownorules = 0;
@@ -61,11 +65,11 @@ const char *fnrules = 0;
 
 void drop_nomem(void)
 {
-  strerr_die2x(111,DROP,"out of memory");
+  strerr_die3x(111,self,DROP,"out of memory");
 }
 void drop_eid(void)
 {
-  strerr_die2sys(111,DROP,"unable to obtain client eid: ");
+  strerr_die3sys(111,self,DROP,"unable to obtain client eid: ");
 }
 void cats(const char *s)
 {
@@ -97,7 +101,7 @@ void env(const char *s,const char *t)
 }
 void drop_rules(void)
 {
-  strerr_die4sys(111,DROP,"unable to read ",fnrules,": ");
+  strerr_die5sys(111,self,DROP,"unable to read ",fnrules,": ");
 }
 
 void found(char *data,unsigned int datalen)
@@ -129,13 +133,13 @@ void doit(int t)
 
   if (verbosity >= 2) {
     strnum[fmt_ulong(strnum,getpid())] = 0;
-    strerr_warn4("ipcaccept: pid ",strnum," from ",remotepath,0);
+    strerr_warn5(self,": pid ",strnum," from ",remotepath,0);
   }
 
   if (*banner) {
     buffer_init(&b,buffer_unixwrite,t,bspace,sizeof bspace);
     if (buffer_putsflush(&b,banner) == -1)
-      strerr_die2sys(111,DROP,"unable to print banner: ");
+      strerr_die3sys(111,self,DROP,"unable to print banner: ");
   }
 
   localpath = forcelocal;
@@ -197,16 +201,17 @@ void doit(int t)
 
 /* ---------------------------- parent */
 
-#define FATAL "ipcaccept: fatal: "
+#define FATAL ": fatal: "
 
 void usage()
 {
-  strerr_warn1("\
-ipcaccept: usage: ipcaccept \
+  strerr_warn4(self,"\
+: usage: ",self," \
 [ -UXhHoOdDqQvpP ] \
 [ -x rules.cdb ] \
 [ -B banner ] \
 [ -l localname ] \
+[ -f lockfile ] \
 program",0);
   _exit(100);
 }
@@ -225,7 +230,7 @@ void sigchld()
     if (verbosity >= 2) {
       strnum[fmt_ulong(strnum,pid)] = 0;
       strnum2[fmt_ulong(strnum2,wstat)] = 0;
-      strerr_warn4("ipcaccept: end ",strnum," status ",strnum2,0);
+      strerr_warn5(self,": end ",strnum," status ",strnum2,0);
     }
   }
 }
@@ -245,6 +250,7 @@ int main(int argc,char * const *argv) {
       case 'q': verbosity = 0; break;
       case 'Q': verbosity = 1; break;
       case 'l': forcelocal = optarg; break;
+      case 'f': lockfile = optarg; break;
       case 'p': flagpeereid = 1; break;
       case 'P': flagpeereid = 0; break;
       default: usage();
@@ -253,6 +259,12 @@ int main(int argc,char * const *argv) {
   argv += optind;
 
   if (!*argv) usage();
+
+  if (lockfile) {
+    fdlock = open_append(lockfile);
+    if (fdlock == -1)
+      strerr_die5sys(111,self,FATAL,"unable to open ",lockfile,": ");
+  }
 
   if (!verbosity)
     buffer_2->fd = -1;
@@ -263,10 +275,19 @@ int main(int argc,char * const *argv) {
   sig_ignore(sig_pipe);
 
   if (fd_move(s,0))
-    strerr_die2sys(111,DROP,"unable to set up accept descriptor: ");
+    strerr_die3sys(111,self,DROP,"unable to set up accept descriptor: ");
 
   for (;;) {
-    t = ipc_accept(s,remotepath,sizeof(remotepath),&trunc);
+    if (lockfile) {
+      if (lock_ex(fdlock) == -1)
+	strerr_die5sys(111,self,FATAL,"unable to lock ",lockfile,": ");
+      t = ipc_accept(s,remotepath,sizeof(remotepath),&trunc);
+      lock_un(fdlock);
+    }
+    else {
+      t = ipc_accept(s,remotepath,sizeof(remotepath),&trunc);
+    }
+
     if (t == -1) continue;
 
     sig_block(sig_child);
@@ -275,15 +296,15 @@ int main(int argc,char * const *argv) {
 	close(s);
 	doit(t);
         if ((fd_move(0,t) == -1) || (fd_copy(1,0) == -1))
-	  strerr_die2sys(111,DROP,"unable to set up program descriptors: ");
+	  strerr_die3sys(111,self,DROP,"unable to set up program descriptors: ");
         sig_uncatch(sig_child);
         sig_unblock(sig_child);
         sig_uncatch(sig_term);
         sig_uncatch(sig_pipe);
         pathexec(argv);
-	strerr_die4sys(111,DROP,"unable to run ",*argv,": ");
+	strerr_die5sys(111,self,DROP,"unable to run ",*argv,": ");
       case -1:
-        strerr_warn2(DROP,"unable to fork: ",&strerr_sys);
+        strerr_warn3(self,DROP,"unable to fork: ",&strerr_sys);
     }
     close(t);
 
