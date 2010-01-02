@@ -15,4 +15,6 @@ ipcprint
 getuid
 getgid
 connect-io
+ipclisten
+ipcaccept
 ipcperl ipcperl

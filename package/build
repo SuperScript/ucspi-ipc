@@ -3,7 +3,7 @@ shout() { echo "package/build: $@" >&2; }
 barf() { shout "fatal: $@"; exit 111; }
 safe() { "$@" || barf "cannot $@"; }
 usage() {
-  shout "usage: package/build [ --help -v N -f -F ] [ target ... ]"
+  shout "usage: package/build [ --help -v N -f -F -p -P ] [ target ... ]"
   exit 100
 }
 ####
@@ -18,6 +18,7 @@ here=`env - PATH=$PATH pwd`
 #
 verbose="1"
 force=""
+parts=""
 while [ $# -gt 0 ]
 do
   case "$1" in
@@ -34,6 +35,14 @@ do
       force="-F"
       shift
       ;;
+    -p)
+      parts="true"
+      shift
+      ;;
+    -P)
+      parts=""
+      shift
+      ;;
     -*)
       usage
       ;;
@@ -45,15 +54,15 @@ done
 #
 if [ $# -gt 0 ]
 then
-  safe package/build-run $force compile src build "$@"
-  safe package/build-command command compile `awk '
-    BEGIN {
-      for (i = 1;i < ARGC; ++i)
-	file[ARGV[i]] = 1
-      ARGC = 1
-    }
-    { if (file[$1]) print $1 }
-  ' "$@" < package/commands`
+  if [ "true" = "$parts" ]
+  then
+    commands="`package/parts target "$@" < package/commands`"
+    safe package/build-run $force compile src build $commands
+    safe package/build-command command compile $commands
+  else
+    safe package/build-run $force compile src build "$@"
+    safe package/build-command command compile "$@"
+  fi
 else
   safe package/build-run $force compile src build it
   safe package/build-command command compile `awk '{ print $1 }' < package/commands`

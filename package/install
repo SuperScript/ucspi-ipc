@@ -6,7 +6,7 @@ usage() {
   shout "\
 usage: package/install [ [-]part ... ]
 available subprojects:
-`package/parts list < src/it=d`"
+`package/parts list < package/commands`"
   exit 100
 }
 ####

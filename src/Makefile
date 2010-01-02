@@ -1,604 +1,1786 @@
-# Don't edit Makefile!  Use conf-* for configuration.
+default: \
+it
 
-SHELL=/bin/sh
+wait_pid.o: \
+makefile.build \
+error.h \
+default.o.build \
+wait_pid.c \
+compile \
+haswaitp.h
+	sh makefile.build default.o.build wait_pid.o wait_pid
 
-default: it
+wait_nohang.o: \
+makefile.build \
+default.o.build \
+wait_nohang.c \
+compile \
+haswaitp.h
+	sh makefile.build default.o.build wait_nohang.o wait_nohang
 
-clean:
-	rm -f alloc.o alloc_re.o auto-str auto-str.o auto_home.c auto_home.o \
-	buffer.o buffer_0.o buffer_1.o buffer_2.o buffer_copy.o buffer_get.o \
-	buffer_put.o buffer_read.o buffer_write.o byte_chr.o byte_copy.o \
-	byte_cr.o byte_diff.o byte_zero.o ccperl cdb.o cdb_hash.o cdb_make.o \
-	chkshsgr chkshsgr.o choose choosing coe.o compile connect-io \
-	connect-io.o env.o error.o error_str.o fd_copy.o fd_move.o fd_shutdown.o \
-	fmt_ulong.o fork.h generic-conf.o getgid getgid.o getln.o getln2.o \
-	getpeereid.c getpeereid.o getuid getuid.o hasflock.h hassgact.h \
-	hassgprm.h hasshsgr.h haswaitp.h iopause.h iopause.o iopause_proxy.o \
-	ipc_accept.o ipc_bind.o ipc_conn.o ipc_eid.o ipc_listen.o ipc_local.o \
-	ipc_stream.o ipccat ipcclient ipcclient.o ipccommand ipccommand.o \
-	ipcconnect ipcdo ipcexec ipcexec-config ipcexec-config.o ipcexec.o \
-	ipcexecrules ipcexecrules.o ipcexecrulescheck ipcexecrulescheck.o \
-	ipchandle.o ipcpath.h ipcperl ipcperl.o ipcprint ipcprint.o ipcrules \
-	ipcrules.o ipcrulescheck ipcrulescheck.o ipcrun ipcserver ipcserver.o it \
-	load lock_ex.o lock_un.o makeinclude makelib makescrip ndelay_off.o \
-	ndelay_on.o open_append.o open_read.o open_trunc.o pathexec_env.o \
-	pathexec_run.o perlembed.lib prot.o rules.o scan_uint.o scan_ulong.o \
-	seek_set.o select.h sgetopt.o sig.o sig_block.o sig_catch.o sig_pause.o \
-	socket.lib str_chr.o str_diff.o str_len.o str_start.o stralloc_cat.o \
-	stralloc_catb.o stralloc_cats.o stralloc_copy.o stralloc_eady.o \
-	stralloc_opyb.o stralloc_opys.o stralloc_pend.o strerr_die.o \
-	strerr_sys.o subgetopt.o sysdeps systype tai_pack.o taia_add.o \
-	taia_approx.o taia_frac.o taia_less.o taia_now.o taia_pack.o taia_sub.o \
-	taia_uint.o tryipcpath tryipcpath.o uint32.h uint32_pack.o \
-	uint32_unpack.o uint64.h unix.a wait_nohang.o wait_pid.o
+unix.a: \
+makefile.build \
+default.a.build \
+makelib \
+unix=l \
+coe.o \
+lock_un.o \
+lock_ex.o \
+generic-conf.o \
+uint32_unpack.o \
+uint32_pack.o \
+rules.o \
+byte_cr.o \
+byte_diff.o \
+byte_chr.o \
+byte_copy.o \
+byte_zero.o \
+cdb_make.o \
+cdb_hash.o \
+cdb.o \
+getpeereid.o \
+taia_uint.o \
+taia_sub.o \
+taia_pack.o \
+taia_now.o \
+taia_less.o \
+taia_frac.o \
+taia_approx.o \
+taia_add.o \
+tai_pack.o \
+iopause_proxy.o \
+iopause.o \
+wait_pid.o \
+wait_nohang.o \
+subgetopt.o \
+strerr_sys.o \
+strerr_die.o \
+stralloc_pend.o \
+stralloc_opys.o \
+stralloc_opyb.o \
+stralloc_eady.o \
+stralloc_copy.o \
+stralloc_cats.o \
+stralloc_catb.o \
+stralloc_cat.o \
+str_start.o \
+str_len.o \
+str_diff.o \
+str_chr.o \
+sig_pause.o \
+sig_catch.o \
+sig_block.o \
+sig.o \
+sgetopt.o \
+seek_set.o \
+prot.o \
+pathexec_run.o \
+pathexec_env.o \
+open_append.o \
+open_trunc.o \
+open_read.o \
+ndelay_off.o \
+ndelay_on.o \
+ipc_stream.o \
+ipc_eid.o \
+ipc_local.o \
+ipc_listen.o \
+ipc_conn.o \
+ipc_bind.o \
+ipc_accept.o \
+getln2.o \
+getln.o \
+scan_uint.o \
+scan_ulong.o \
+fmt_ulong.o \
+fd_shutdown.o \
+fd_move.o \
+fd_copy.o \
+error_str.o \
+error.o \
+env.o \
+buffer_write.o \
+buffer_read.o \
+buffer_copy.o \
+buffer_put.o \
+buffer_get.o \
+buffer_2.o \
+buffer_1.o \
+buffer_0.o \
+buffer.o \
+alloc_re.o \
+alloc.o
+	sh makefile.build default.a.build unix.a unix
 
-alloc.o: compile alloc.c alloc.h error.h
-	./compile alloc.c
+uint64.h: \
+makefile.build \
+uint64.h.build \
+uint64.h2 \
+uint64.h1 \
+tryulong64.c \
+load \
+compile \
+choose
+	sh makefile.build uint64.h.build uint64.h 
 
-alloc_re.o: compile alloc_re.c alloc.h byte.h
-	./compile alloc_re.c
+uint32_unpack.o: \
+makefile.build \
+default.o.build \
+uint32_unpack.c \
+compile \
+uint32.h
+	sh makefile.build default.o.build uint32_unpack.o uint32_unpack
 
-auto-str: load auto-str.o unix.a
-	./load auto-str unix.a 
+uint32_pack.o: \
+makefile.build \
+default.o.build \
+uint32_pack.c \
+compile \
+uint32.h
+	sh makefile.build default.o.build uint32_pack.o uint32_pack
 
-auto-str.o: compile auto-str.c buffer.h exit.h
-	./compile auto-str.c
+uint32.h: \
+makefile.build \
+uint32.h.build \
+uint32.h2 \
+uint32.h1 \
+tryulong32.c \
+load \
+compile \
+choose
+	sh makefile.build uint32.h.build uint32.h 
 
-auto_home.c: auto-str home
-	./auto-str auto_home "`head -1 home`" > auto_home.c
+tryipcpath.o: \
+makefile.build \
+fmt.h \
+default.o.build \
+tryipcpath.c \
+compile
+	sh makefile.build default.o.build tryipcpath.o tryipcpath
 
-auto_home.o: compile auto_home.c
-	./compile auto_home.c
+tryipcpath: \
+makefile.build \
+tryipcpath=x \
+default.build \
+fmt_ulong.o \
+tryipcpath.o \
+load
+	sh makefile.build default.build tryipcpath tryipcpath
 
-buffer.o: compile buffer.c buffer.h
-	./compile buffer.c
+taia_uint.o: \
+makefile.build \
+tai.h \
+taia.h \
+default.o.build \
+taia_uint.c \
+compile \
+uint64.h
+	sh makefile.build default.o.build taia_uint.o taia_uint
 
-buffer_0.o: compile buffer_0.c buffer.h
-	./compile buffer_0.c
+taia_sub.o: \
+makefile.build \
+tai.h \
+taia.h \
+default.o.build \
+taia_sub.c \
+compile \
+uint64.h
+	sh makefile.build default.o.build taia_sub.o taia_sub
 
-buffer_1.o: compile buffer_1.c buffer.h
-	./compile buffer_1.c
+taia_pack.o: \
+makefile.build \
+tai.h \
+taia.h \
+default.o.build \
+taia_pack.c \
+compile \
+uint64.h
+	sh makefile.build default.o.build taia_pack.o taia_pack
 
-buffer_2.o: compile buffer_2.c buffer.h
-	./compile buffer_2.c
+taia_now.o: \
+makefile.build \
+tai.h \
+taia.h \
+default.o.build \
+taia_now.c \
+compile \
+uint64.h
+	sh makefile.build default.o.build taia_now.o taia_now
 
-buffer_copy.o: compile buffer_copy.c buffer.h
-	./compile buffer_copy.c
+taia_less.o: \
+makefile.build \
+tai.h \
+taia.h \
+default.o.build \
+taia_less.c \
+compile \
+uint64.h
+	sh makefile.build default.o.build taia_less.o taia_less
 
-buffer_get.o: compile buffer_get.c buffer.h byte.h error.h
-	./compile buffer_get.c
+taia_frac.o: \
+makefile.build \
+tai.h \
+taia.h \
+default.o.build \
+taia_frac.c \
+compile \
+uint64.h
+	sh makefile.build default.o.build taia_frac.o taia_frac
 
-buffer_put.o: compile buffer_put.c buffer.h str.h byte.h error.h
-	./compile buffer_put.c
+taia_approx.o: \
+makefile.build \
+tai.h \
+taia.h \
+default.o.build \
+taia_approx.c \
+compile \
+uint64.h
+	sh makefile.build default.o.build taia_approx.o taia_approx
 
-buffer_read.o: compile buffer_read.c buffer.h
-	./compile buffer_read.c
+taia_add.o: \
+makefile.build \
+tai.h \
+taia.h \
+default.o.build \
+taia_add.c \
+compile \
+uint64.h
+	sh makefile.build default.o.build taia_add.o taia_add
 
-buffer_write.o: compile buffer_write.c buffer.h
-	./compile buffer_write.c
+tai_pack.o: \
+makefile.build \
+tai.h \
+default.o.build \
+tai_pack.c \
+compile \
+uint64.h
+	sh makefile.build default.o.build tai_pack.o tai_pack
 
-byte_chr.o: compile byte_chr.c byte.h
-	./compile byte_chr.c
+systype: \
+makefile.build \
+x86cpuid.c \
+trycpp.c \
+find-systype.sh \
+default.build
+	sh makefile.build default.build systype systype
 
-byte_copy.o: compile byte_copy.c byte.h
-	./compile byte_copy.c
+sysdeps: \
+makefile.build \
+default.build \
+uint64.h \
+select.h \
+iopause.h \
+haswaitp.h \
+hasshsgr.h \
+hassgprm.h \
+hassgact.h \
+hasflock.h \
+fork.h \
+load \
+compile \
+systype
+	sh makefile.build default.build sysdeps sysdeps
 
-byte_cr.o: compile byte_cr.c byte.h
-	./compile byte_cr.c
+subgetopt.o: \
+makefile.build \
+subgetopt.h \
+default.o.build \
+subgetopt.c \
+compile
+	sh makefile.build default.o.build subgetopt.o subgetopt
 
-byte_diff.o: compile byte_diff.c byte.h
-	./compile byte_diff.c
+strerr_sys.o: \
+makefile.build \
+strerr.h \
+error.h \
+default.o.build \
+strerr_sys.c \
+compile
+	sh makefile.build default.o.build strerr_sys.o strerr_sys
 
-byte_zero.o: compile byte_zero.c byte.h
-	./compile byte_zero.c
+strerr_die.o: \
+makefile.build \
+strerr.h \
+exit.h \
+buffer.h \
+default.o.build \
+strerr_die.c \
+compile
+	sh makefile.build default.o.build strerr_die.o strerr_die
 
-ccperl: conf-ccperl conf-perl print-ccperl.sh
-	rm -f ccperl
-	sh print-ccperl.sh > ccperl
+stralloc_pend.o: \
+makefile.build \
+gen_alloc.h \
+gen_allocdefs.h \
+stralloc.h \
+alloc.h \
+default.o.build \
+stralloc_pend.c \
+compile
+	sh makefile.build default.o.build stralloc_pend.o stralloc_pend
 
-cdb.o: compile cdb.c error.h seek.h byte.h cdb.h uint32.h
-	./compile cdb.c
+stralloc_opys.o: \
+makefile.build \
+gen_alloc.h \
+stralloc.h \
+str.h \
+byte.h \
+default.o.build \
+stralloc_opys.c \
+compile
+	sh makefile.build default.o.build stralloc_opys.o stralloc_opys
 
-cdb_hash.o: compile cdb_hash.c cdb.h uint32.h
-	./compile cdb_hash.c
+stralloc_opyb.o: \
+makefile.build \
+gen_alloc.h \
+byte.h \
+stralloc.h \
+default.o.build \
+stralloc_opyb.c \
+compile
+	sh makefile.build default.o.build stralloc_opyb.o stralloc_opyb
 
-cdb_make.o: compile cdb_make.c seek.h error.h alloc.h cdb.h cdb_make.h \
-uint32.h buffer.h uint32.h
-	./compile cdb_make.c
+stralloc_eady.o: \
+makefile.build \
+gen_alloc.h \
+gen_allocdefs.h \
+stralloc.h \
+alloc.h \
+default.o.build \
+stralloc_eady.c \
+compile
+	sh makefile.build default.o.build stralloc_eady.o stralloc_eady
 
-chkshsgr: load chkshsgr.o
-	./load chkshsgr 
+stralloc_copy.o: \
+makefile.build \
+gen_alloc.h \
+stralloc.h \
+byte.h \
+default.o.build \
+stralloc_copy.c \
+compile
+	sh makefile.build default.o.build stralloc_copy.o stralloc_copy
 
-chkshsgr.o: compile chkshsgr.c exit.h
-	./compile chkshsgr.c
+stralloc_cats.o: \
+makefile.build \
+gen_alloc.h \
+stralloc.h \
+str.h \
+byte.h \
+default.o.build \
+stralloc_cats.c \
+compile
+	sh makefile.build default.o.build stralloc_cats.o stralloc_cats
 
-choose: makeinclude makescrip warn-auto.sh choose.sh
-	rm -f choose
-	./makeinclude code warn-auto.sh choose.sh \
-	| ./makescrip choose choose choose.tmp \
-	> choose
-	chmod 755 choose
+stralloc_catb.o: \
+makefile.build \
+gen_alloc.h \
+byte.h \
+stralloc.h \
+default.o.build \
+stralloc_catb.c \
+compile
+	sh makefile.build default.o.build stralloc_catb.o stralloc_catb
 
-choosing: makeinclude makescrip warn-auto.sh choosing.sh
-	rm -f choosing
-	./makeinclude code warn-auto.sh choosing.sh \
-	| ./makescrip choosing choosing choosing.tmp \
-	> choosing
-	chmod 755 choosing
+stralloc_cat.o: \
+makefile.build \
+gen_alloc.h \
+stralloc.h \
+byte.h \
+default.o.build \
+stralloc_cat.c \
+compile
+	sh makefile.build default.o.build stralloc_cat.o stralloc_cat
 
-coe.o: compile coe.c coe.h
-	./compile coe.c
+str_start.o: \
+makefile.build \
+str.h \
+default.o.build \
+str_start.c \
+compile
+	sh makefile.build default.o.build str_start.o str_start
 
-compile: conf-cc print-cc.sh systype warn-auto.sh
-	rm -f compile
-	sh print-cc.sh > compile
-	chmod 755 compile
+str_len.o: \
+makefile.build \
+str.h \
+default.o.build \
+str_len.c \
+compile
+	sh makefile.build default.o.build str_len.o str_len
 
-connect-io: load connect-io.o unix.a
-	./load connect-io unix.a 
+str_diff.o: \
+makefile.build \
+str.h \
+default.o.build \
+str_diff.c \
+compile
+	sh makefile.build default.o.build str_diff.o str_diff
 
-connect-io.o: compile connect-io.c exit.h iopause.h strerr.h scan.h \
-ndelay.h sig.h taia.h tai.h uint64.h
-	./compile connect-io.c
+str_chr.o: \
+makefile.build \
+str.h \
+default.o.build \
+str_chr.c \
+compile
+	sh makefile.build default.o.build str_chr.o str_chr
 
-env.o: compile env.c str.h env.h
-	./compile env.c
+socket.lib: \
+makefile.build \
+default.lib.build \
+load \
+compile \
+trylsock.c
+	sh makefile.build default.lib.build socket.lib socket
 
-error.o: compile error.c error.h
-	./compile error.c
+sig_pause.o: \
+makefile.build \
+sig.h \
+default.o.build \
+sig_pause.c \
+compile \
+hassgprm.h
+	sh makefile.build default.o.build sig_pause.o sig_pause
 
-error_str.o: compile error_str.c error.h
-	./compile error_str.c
+sig_catch.o: \
+makefile.build \
+sig.h \
+default.o.build \
+hassgact.h \
+sig_catch.c \
+compile
+	sh makefile.build default.o.build sig_catch.o sig_catch
 
-fd_copy.o: compile fd_copy.c fd.h
-	./compile fd_copy.c
+sig_block.o: \
+makefile.build \
+sig.h \
+default.o.build \
+hassgprm.h \
+sig_block.c \
+compile
+	sh makefile.build default.o.build sig_block.o sig_block
 
-fd_move.o: compile fd_move.c fd.h
-	./compile fd_move.c
+sig.o: \
+makefile.build \
+sig.h \
+default.o.build \
+sig.c \
+compile
+	sh makefile.build default.o.build sig.o sig
 
-fd_shutdown.o: compile fd_shutdown.c fd.h error.h
-	./compile fd_shutdown.c
+sgetopt.o: \
+makefile.build \
+subgetopt.h \
+sgetopt.h \
+buffer.h \
+default.o.build \
+sgetopt.c \
+compile
+	sh makefile.build default.o.build sgetopt.o sgetopt
 
-fmt_ulong.o: compile fmt_ulong.c fmt.h
-	./compile fmt_ulong.c
+select.h: \
+makefile.build \
+select.h.build \
+select.h2 \
+select.h1 \
+trysysel.c \
+compile \
+choose
+	sh makefile.build select.h.build select.h 
 
-fork.h: choose compile load tryvfork.c fork.h1 fork.h2
-	./choose cl tryvfork fork.h1 fork.h2 >fork.h
+seek_set.o: \
+makefile.build \
+seek.h \
+default.o.build \
+seek_set.c \
+compile
+	sh makefile.build default.o.build seek_set.o seek_set
 
-generic-conf.o: compile generic-conf.c strerr.h buffer.h open.h \
-generic-conf.h buffer.h
-	./compile generic-conf.c
+scan_ulong.o: \
+makefile.build \
+scan.h \
+default.o.build \
+scan_ulong.c \
+compile
+	sh makefile.build default.o.build scan_ulong.o scan_ulong
 
-getgid: load getgid.o unix.a
-	./load getgid unix.a 
+scan_uint.o: \
+makefile.build \
+scan.h \
+default.o.build \
+scan_uint.c \
+compile
+	sh makefile.build default.o.build scan_uint.o scan_uint
 
-getgid.o: compile getgid.c strerr.h fmt.h buffer.h exit.h
-	./compile getgid.c
+rules.o: \
+makefile.build \
+gen_alloc.h \
+rules.h \
+cdb.h \
+open.h \
+stralloc.h \
+alloc.h \
+default.o.build \
+rules.c \
+compile \
+uint32.h
+	sh makefile.build default.o.build rules.o rules
 
-getln.o: compile getln.c byte.h getln.h buffer.h stralloc.h gen_alloc.h
-	./compile getln.c
+prot.o: \
+makefile.build \
+prot.h \
+default.o.build \
+prot.c \
+compile \
+hasshsgr.h
+	sh makefile.build default.o.build prot.o prot
 
-getln2.o: compile getln2.c byte.h getln.h buffer.h stralloc.h gen_alloc.h
-	./compile getln2.c
+perlembed.lib: \
+makefile.build \
+print-perlembed.sh \
+conf-ldperl \
+conf-perl \
+perlembed.lib.build
+	sh makefile.build perlembed.lib.build perlembed.lib 
 
-getpeereid.c: systype compile load choosing trygpid.c trysopc.c \
-getpeereid.so_peercred getpeereid.syscall getpeereid.oops
-	./choosing c trysopc getpeereid.so_peercred >getpeereid.c \
-	|| ./choosing cl trygpid getpeereid.syscall >getpeereid.c \
-	|| cat getpeereid.oops > getpeereid.c
+pathexec_run.o: \
+makefile.build \
+gen_alloc.h \
+pathexec.h \
+env.h \
+str.h \
+stralloc.h \
+error.h \
+default.o.build \
+pathexec_run.c \
+compile
+	sh makefile.build default.o.build pathexec_run.o pathexec_run
 
-getpeereid.o: compile getpeereid.c
-	./compile getpeereid.c
+pathexec_env.o: \
+makefile.build \
+gen_alloc.h \
+pathexec.h \
+env.h \
+byte.h \
+str.h \
+alloc.h \
+stralloc.h \
+default.o.build \
+pathexec_env.c \
+compile
+	sh makefile.build default.o.build pathexec_env.o pathexec_env
 
-getuid: load getuid.o unix.a
-	./load getuid unix.a 
+open_trunc.o: \
+makefile.build \
+open.h \
+default.o.build \
+open_trunc.c \
+compile
+	sh makefile.build default.o.build open_trunc.o open_trunc
 
-getuid.o: compile getuid.c strerr.h fmt.h buffer.h exit.h
-	./compile getuid.c
+open_read.o: \
+makefile.build \
+open.h \
+default.o.build \
+open_read.c \
+compile
+	sh makefile.build default.o.build open_read.o open_read
 
-hasflock.h: choose compile load tryflock.c hasflock.h1 hasflock.h2
-	./choose cl tryflock hasflock.h1 hasflock.h2 > hasflock.h
+open_append.o: \
+makefile.build \
+open.h \
+default.o.build \
+open_append.c \
+compile
+	sh makefile.build default.o.build open_append.o open_append
 
-hassgact.h: choose compile trysgact.c hassgact.h1 hassgact.h2
-	./choose cl trysgact hassgact.h1 hassgact.h2 > hassgact.h
+ndelay_on.o: \
+makefile.build \
+ndelay.h \
+default.o.build \
+ndelay_on.c \
+compile
+	sh makefile.build default.o.build ndelay_on.o ndelay_on
 
-hassgprm.h: choose compile trysgprm.c hassgprm.h1 hassgprm.h2
-	./choose cl trysgprm hassgprm.h1 hassgprm.h2 > hassgprm.h
+ndelay_off.o: \
+makefile.build \
+ndelay.h \
+default.o.build \
+ndelay_off.c \
+compile
+	sh makefile.build default.o.build ndelay_off.o ndelay_off
 
-hasshsgr.h: choose compile tryshsgr.c hasshsgr.h1 hasshsgr.h2 chkshsgr \
-warn-shsgr
-	./chkshsgr || ( cat warn-shsgr; exit 1 )
-	./choose clr tryshsgr hasshsgr.h1 hasshsgr.h2 > hasshsgr.h
+makescrip: \
+makefile.build \
+conf-ipcexec \
+home \
+conf-scrip \
+print-makescrip.sh \
+warn-auto.sh \
+default.build
+	sh makefile.build default.build makescrip makescrip
 
-haswaitp.h: choose compile load trywaitp.c haswaitp.h1 haswaitp.h2
-	./choose cl trywaitp haswaitp.h1 haswaitp.h2 >haswaitp.h
+makelib: \
+makefile.build \
+default.build \
+warn-auto.sh \
+systype \
+print-ar.sh
+	sh makefile.build default.build makelib makelib
 
-iopause.h: choose compile load trypoll.c iopause.h1 iopause.h2
-	./choose clr trypoll iopause.h1 iopause.h2 >iopause.h
+makeinclude: \
+makefile.build \
+warn-auto.sh \
+makeinclude.sh \
+default.build
+	sh makefile.build default.build makeinclude makeinclude
 
-iopause.o: compile iopause.c taia.h select.h iopause.h tai.h taia.h \
-uint64.h tai.h uint64.h
-	./compile iopause.c
+lock_un.o: \
+makefile.build \
+lock.h \
+default.o.build \
+lock_un.c \
+compile \
+hasflock.h
+	sh makefile.build default.o.build lock_un.o lock_un
 
-iopause_proxy.o: compile iopause_proxy.c iopause.h buffer.h fd.h error.h \
-taia.h tai.h uint64.h
-	./compile iopause_proxy.c
+lock_ex.o: \
+makefile.build \
+lock.h \
+default.o.build \
+lock_ex.c \
+compile \
+hasflock.h
+	sh makefile.build default.o.build lock_ex.o lock_ex
 
-ipc_accept.o: compile ipc_accept.c byte.h ipc.h
-	./compile ipc_accept.c
+load: \
+makefile.build \
+warn-auto.sh \
+print-load.sh \
+conf-ld \
+default.build
+	sh makefile.build default.build load load
 
-ipc_bind.o: compile ipc_bind.c error.h byte.h str.h ipc.h ipcpath.h
-	./compile ipc_bind.c
+it: \
+makefile.build \
+sysdeps \
+ipcperl \
+ipcaccept \
+ipclisten \
+connect-io \
+getgid \
+getuid \
+ipcprint \
+ipcexec-config \
+ipcrun \
+ipcexec \
+ipccommand \
+ipcdo \
+ipcexecrulescheck \
+ipcexecrules \
+ipcrulescheck \
+ipcrules \
+ipcconnect \
+ipccat \
+ipcserver \
+ipcclient \
+it=d \
+default.build
+	sh makefile.build default.build it it
 
-ipc_conn.o: compile ipc_conn.c error.h byte.h str.h ndelay.h ipc.h \
+ipcserver.o: \
+makefile.build \
+subgetopt.h \
+gen_alloc.h \
+ndelay.h \
+sig.h \
+rules.h \
+ipc.h \
+pathexec.h \
+sgetopt.h \
+strerr.h \
+error.h \
+buffer.h \
+alloc.h \
+stralloc.h \
+wait.h \
+open.h \
+prot.h \
+env.h \
+exit.h \
+fd.h \
+scan.h \
+fmt.h \
+byte.h \
+str.h \
+default.o.build \
+ipcserver.c \
+compile \
+fork.h \
 ipcpath.h
-	./compile ipc_conn.c
-
-ipc_eid.o: compile ipc_eid.c getpeereid.h ipc.h
-	./compile ipc_eid.c
+	sh makefile.build default.o.build ipcserver.o ipcserver
+
+ipcserver: \
+makefile.build \
+ipcserver=x \
+default.build \
+socket.lib \
+unix.a \
+ipcserver.o \
+load
+	sh makefile.build default.build ipcserver ipcserver
+
+ipcrun: \
+makefile.build \
+ipcrun.sh \
+warn-auto.sh \
+ipcrun.sh \
+warn-auto.sh \
+default.build \
+makescrip \
+makeinclude \
+ipcrun=s
+	sh makefile.build default.build ipcrun ipcrun
+
+ipcrulescheck.o: \
+makefile.build \
+gen_alloc.h \
+stralloc.h \
+exit.h \
+rules.h \
+open.h \
+env.h \
+strerr.h \
+buffer.h \
+byte.h \
+default.o.build \
+ipcrulescheck.c \
+compile
+	sh makefile.build default.o.build ipcrulescheck.o ipcrulescheck
+
+ipcrulescheck: \
+makefile.build \
+ipcrulescheck=x \
+default.build \
+unix.a \
+ipcrulescheck.o \
+load
+	sh makefile.build default.build ipcrulescheck ipcrulescheck
+
+ipcrules.o: \
+makefile.build \
+gen_alloc.h \
+open.h \
+scan.h \
+cdb_make.h \
+byte.h \
+fmt.h \
+exit.h \
+buffer.h \
+getln.h \
+stralloc.h \
+strerr.h \
+default.o.build \
+ipcrules.c \
+compile \
+uint32.h
+	sh makefile.build default.o.build ipcrules.o ipcrules
+
+ipcrules: \
+makefile.build \
+ipcrules=x \
+default.build \
+unix.a \
+ipcrules.o \
+load
+	sh makefile.build default.build ipcrules ipcrules
+
+ipcprint.o: \
+makefile.build \
+env.h \
+buffer.h \
+default.o.build \
+ipcprint.c \
+compile
+	sh makefile.build default.o.build ipcprint.o ipcprint
+
+ipcprint: \
+makefile.build \
+ipcprint=x \
+default.build \
+socket.lib \
+unix.a \
+ipchandle.o \
+ipcprint.o \
+load
+	sh makefile.build default.build ipcprint ipcprint
+
+ipcperl.o: \
+makefile.build \
+gen_alloc.h \
+str.h \
+stralloc.h \
+strerr.h \
+ipcperl.o.build \
+ipcperl.c \
+ccperl \
+compile
+	sh makefile.build ipcperl.o.build ipcperl.o 
+
+ipcperl: \
+makefile.build \
+ipcperl=x \
+default.build \
+perlembed.lib \
+socket.lib \
+unix.a \
+ipchandle.o \
+ipcperl.o \
+load
+	sh makefile.build default.build ipcperl ipcperl
+
+ipcpath.h: \
+makefile.build \
+ipcpath.h.build \
+print-ipcpath.sh \
+tryipcpath \
+compile
+	sh makefile.build ipcpath.h.build ipcpath.h 
+
+ipclisten.o: \
+makefile.build \
+subgetopt.h \
+gen_alloc.h \
+ndelay.h \
+sig.h \
+ipc.h \
+pathexec.h \
+sgetopt.h \
+strerr.h \
+error.h \
+buffer.h \
+alloc.h \
+stralloc.h \
+wait.h \
+open.h \
+prot.h \
+env.h \
+exit.h \
+fd.h \
+scan.h \
+fmt.h \
+byte.h \
+str.h \
+default.o.build \
+ipclisten.c \
+compile \
+fork.h \
+ipcpath.h
+	sh makefile.build default.o.build ipclisten.o ipclisten
+
+ipclisten: \
+makefile.build \
+ipclisten=x \
+default.build \
+socket.lib \
+unix.a \
+ipclisten.o \
+load
+	sh makefile.build default.build ipclisten ipclisten
+
+ipchandle.o: \
+makefile.build \
+tai.h \
+taia.h \
+subgetopt.h \
+gen_alloc.h \
+lock.h \
+coe.h \
+sig.h \
+rules.h \
+ndelay.h \
+ipc.h \
+sgetopt.h \
+strerr.h \
+error.h \
+buffer.h \
+alloc.h \
+stralloc.h \
+wait.h \
+open.h \
+prot.h \
+env.h \
+exit.h \
+fd.h \
+ip4.h \
+scan.h \
+fmt.h \
+byte.h \
+str.h \
+uint16.h \
+default.o.build \
+ipchandle.c \
+compile \
+uint64.h \
+iopause.h \
+ipcpath.h
+	sh makefile.build default.o.build ipchandle.o ipchandle
+
+ipcexecrulescheck.o: \
+makefile.build \
+gen_alloc.h \
+exit.h \
+open.h \
+stralloc.h \
+rules.h \
+env.h \
+strerr.h \
+buffer.h \
+byte.h \
+default.o.build \
+ipcexecrulescheck.c \
+compile
+	sh makefile.build default.o.build ipcexecrulescheck.o ipcexecrulescheck
+
+ipcexecrulescheck: \
+makefile.build \
+ipcexecrulescheck=x \
+default.build \
+unix.a \
+ipcexecrulescheck.o \
+load
+	sh makefile.build default.build ipcexecrulescheck ipcexecrulescheck
+
+ipcexecrules.o: \
+makefile.build \
+gen_alloc.h \
+open.h \
+cdb_make.h \
+byte.h \
+scan.h \
+fmt.h \
+exit.h \
+buffer.h \
+getln.h \
+stralloc.h \
+strerr.h \
+default.o.build \
+ipcexecrules.c \
+compile \
+uint32.h
+	sh makefile.build default.o.build ipcexecrules.o ipcexecrules
+
+ipcexecrules: \
+makefile.build \
+ipcexecrules=x \
+default.build \
+unix.a \
+ipcexecrules.o \
+load
+	sh makefile.build default.build ipcexecrules ipcexecrules
+
+ipcexec.o: \
+makefile.build \
+gen_alloc.h \
+fd.h \
+rules.h \
+pathexec.h \
+env.h \
+strerr.h \
+error.h \
+buffer.h \
+alloc.h \
+stralloc.h \
+open.h \
+prot.h \
+exit.h \
+scan.h \
+fmt.h \
+byte.h \
+str.h \
+default.o.build \
+ipcexec.c \
+compile
+	sh makefile.build default.o.build ipcexec.o ipcexec
+
+ipcexec-config.o: \
+makefile.build \
+buffer.h \
+fmt.h \
+generic-conf.h \
+auto_home.h \
+exit.h \
+strerr.h \
+default.o.build \
+ipcexec-config.c \
+compile
+	sh makefile.build default.o.build ipcexec-config.o ipcexec-config
+
+ipcexec-config: \
+makefile.build \
+ipcexec-config=x \
+default.build \
+auto_home.o \
+unix.a \
+ipcexec-config.o \
+load
+	sh makefile.build default.build ipcexec-config ipcexec-config
+
+ipcexec: \
+makefile.build \
+ipcexec=x \
+default.build \
+unix.a \
+ipcexec.o \
+load
+	sh makefile.build default.build ipcexec ipcexec
+
+ipcdo: \
+makefile.build \
+ipcdo.sh \
+warn-auto.sh \
+ipcdo.sh \
+warn-auto.sh \
+default.build \
+makescrip \
+makeinclude \
+ipcdo=s
+	sh makefile.build default.build ipcdo ipcdo
+
+ipcconnect: \
+makefile.build \
+ipcconnect.sh \
+warn-auto.sh \
+ipcconnect.sh \
+warn-auto.sh \
+default.build \
+makescrip \
+makeinclude \
+ipcconnect=s
+	sh makefile.build default.build ipcconnect ipcconnect
+
+ipccommand.o: \
+makefile.build \
+exit.h \
+str.h \
+strerr.h \
+buffer.h \
+scan.h \
+fmt.h \
+wait.h \
+sig.h \
+default.o.build \
+ipccommand.c \
+compile \
+fork.h
+	sh makefile.build default.o.build ipccommand.o ipccommand
+
+ipccommand: \
+makefile.build \
+ipccommand=x \
+default.build \
+unix.a \
+ipccommand.o \
+load
+	sh makefile.build default.build ipccommand ipccommand
+
+ipcclient.o: \
+makefile.build \
+subgetopt.h \
+pathexec.h \
+strerr.h \
+error.h \
+buffer.h \
+fd.h \
+ipc.h \
+str.h \
+sgetopt.h \
+exit.h \
+sig.h \
+ipcclient.c \
+compile \
+default.o.build \
+ipcpath.h
+	sh makefile.build default.o.build ipcclient.o ipcclient
+
+ipcclient: \
+makefile.build \
+socket.lib \
+unix.a \
+ipcclient.o \
+load \
+ipcclient=x \
+default.build
+	sh makefile.build default.build ipcclient ipcclient
+
+ipccat: \
+makefile.build \
+ipccat.sh \
+warn-auto.sh \
+ipccat.sh \
+warn-auto.sh \
+default.build \
+makescrip \
+makeinclude \
+ipccat=s
+	sh makefile.build default.build ipccat ipccat
+
+ipcaccept.o: \
+makefile.build \
+subgetopt.h \
+gen_alloc.h \
+lock.h \
+ndelay.h \
+sig.h \
+rules.h \
+ipc.h \
+pathexec.h \
+sgetopt.h \
+strerr.h \
+error.h \
+buffer.h \
+alloc.h \
+stralloc.h \
+wait.h \
+open.h \
+prot.h \
+env.h \
+exit.h \
+fd.h \
+scan.h \
+fmt.h \
+byte.h \
+str.h \
+default.o.build \
+ipcaccept.c \
+compile \
+fork.h \
+ipcpath.h
+	sh makefile.build default.o.build ipcaccept.o ipcaccept
+
+ipcaccept: \
+makefile.build \
+ipcaccept=x \
+default.build \
+socket.lib \
+unix.a \
+ipcaccept.o \
+load
+	sh makefile.build default.build ipcaccept ipcaccept
+
+ipc_stream.o: \
+makefile.build \
+ipc.h \
+ndelay.h \
+default.o.build \
+ipc_stream.c \
+compile
+	sh makefile.build default.o.build ipc_stream.o ipc_stream
+
+ipc_local.o: \
+makefile.build \
+ipc.h \
+byte.h \
+default.o.build \
+ipc_local.c \
+compile
+	sh makefile.build default.o.build ipc_local.o ipc_local
+
+ipc_listen.o: \
+makefile.build \
+ipc.h \
+default.o.build \
+ipc_listen.c \
+compile
+	sh makefile.build default.o.build ipc_listen.o ipc_listen
+
+ipc_eid.o: \
+makefile.build \
+ipc.h \
+getpeereid.h \
+default.o.build \
+ipc_eid.c \
+compile
+	sh makefile.build default.o.build ipc_eid.o ipc_eid
+
+ipc_conn.o: \
+makefile.build \
+ipc.h \
+ndelay.h \
+str.h \
+byte.h \
+error.h \
+default.o.build \
+ipc_conn.c \
+compile \
+ipcpath.h
+	sh makefile.build default.o.build ipc_conn.o ipc_conn
+
+ipc_bind.o: \
+makefile.build \
+ipc.h \
+str.h \
+byte.h \
+error.h \
+default.o.build \
+ipc_bind.c \
+compile \
+ipcpath.h
+	sh makefile.build default.o.build ipc_bind.o ipc_bind
+
+ipc_accept.o: \
+makefile.build \
+ipc.h \
+byte.h \
+default.o.build \
+ipc_accept.c \
+compile
+	sh makefile.build default.o.build ipc_accept.o ipc_accept
+
+iopause_proxy.o: \
+makefile.build \
+tai.h \
+taia.h \
+error.h \
+fd.h \
+buffer.h \
+default.o.build \
+iopause_proxy.c \
+compile \
+uint64.h \
+iopause.h
+	sh makefile.build default.o.build iopause_proxy.o iopause_proxy
+
+iopause.o: \
+makefile.build \
+tai.h \
+taia.h \
+default.o.build \
+select.h \
+iopause.c \
+compile \
+uint64.h \
+iopause.h
+	sh makefile.build default.o.build iopause.o iopause
+
+iopause.h: \
+makefile.build \
+iopause.h.build \
+iopause.h2 \
+iopause.h1 \
+trypoll.c \
+load \
+compile \
+choose
+	sh makefile.build iopause.h.build iopause.h 
+
+haswaitp.h: \
+makefile.build \
+haswaitp.h.build \
+haswaitp.h2 \
+haswaitp.h1 \
+trywaitp.c \
+load \
+compile \
+choose
+	sh makefile.build haswaitp.h.build haswaitp.h 
+
+hasshsgr.h: \
+makefile.build \
+hasshsgr.h.build \
+warn-shsgr \
+chkshsgr \
+hasshsgr.h2 \
+hasshsgr.h1 \
+tryshsgr.c \
+compile \
+choose
+	sh makefile.build hasshsgr.h.build hasshsgr.h 
+
+hassgprm.h: \
+makefile.build \
+hassgprm.h.build \
+hassgprm.h2 \
+hassgprm.h1 \
+trysgprm.c \
+compile \
+choose
+	sh makefile.build hassgprm.h.build hassgprm.h 
+
+hassgact.h: \
+makefile.build \
+hassgact.h.build \
+hassgact.h2 \
+hassgact.h1 \
+trysgact.c \
+compile \
+choose
+	sh makefile.build hassgact.h.build hassgact.h 
+
+hasflock.h: \
+makefile.build \
+hasflock.h.build \
+hasflock.h2 \
+hasflock.h1 \
+tryflock.c \
+load \
+compile \
+choose
+	sh makefile.build hasflock.h.build hasflock.h 
+
+getuid.o: \
+makefile.build \
+exit.h \
+buffer.h \
+fmt.h \
+strerr.h \
+default.o.build \
+getuid.c \
+compile
+	sh makefile.build default.o.build getuid.o getuid
+
+getuid: \
+makefile.build \
+getuid=x \
+default.build \
+unix.a \
+getuid.o \
+load
+	sh makefile.build default.build getuid getuid
+
+getpeereid.o: \
+makefile.build \
+default.o.build \
+getpeereid.c \
+compile
+	sh makefile.build default.o.build getpeereid.o getpeereid
+
+getpeereid.c: \
+makefile.build \
+getpeereid.oops \
+getpeereid.syscall \
+getpeereid.so_peercred \
+getpeereid.c.build \
+trysopc.c \
+trygpid.c \
+choosing \
+load \
+compile \
+systype
+	sh makefile.build getpeereid.c.build getpeereid.c 
+
+getln2.o: \
+makefile.build \
+gen_alloc.h \
+stralloc.h \
+buffer.h \
+getln.h \
+byte.h \
+default.o.build \
+getln2.c \
+compile
+	sh makefile.build default.o.build getln2.o getln2
+
+getln.o: \
+makefile.build \
+gen_alloc.h \
+stralloc.h \
+buffer.h \
+getln.h \
+byte.h \
+default.o.build \
+getln.c \
+compile
+	sh makefile.build default.o.build getln.o getln
+
+getgid.o: \
+makefile.build \
+exit.h \
+buffer.h \
+fmt.h \
+strerr.h \
+default.o.build \
+getgid.c \
+compile
+	sh makefile.build default.o.build getgid.o getgid
+
+getgid: \
+makefile.build \
+getgid=x \
+default.build \
+unix.a \
+getgid.o \
+load
+	sh makefile.build default.build getgid getgid
+
+generic-conf.o: \
+makefile.build \
+generic-conf.h \
+open.h \
+buffer.h \
+strerr.h \
+default.o.build \
+generic-conf.c \
+compile
+	sh makefile.build default.o.build generic-conf.o generic-conf
+
+fork.h: \
+makefile.build \
+fork.h.build \
+fork.h2 \
+fork.h1 \
+tryvfork.c \
+load \
+compile \
+choose
+	sh makefile.build fork.h.build fork.h 
+
+fmt_ulong.o: \
+makefile.build \
+fmt.h \
+default.o.build \
+fmt_ulong.c \
+compile
+	sh makefile.build default.o.build fmt_ulong.o fmt_ulong
+
+fd_shutdown.o: \
+makefile.build \
+error.h \
+fd.h \
+default.o.build \
+fd_shutdown.c \
+compile
+	sh makefile.build default.o.build fd_shutdown.o fd_shutdown
+
+fd_move.o: \
+makefile.build \
+fd.h \
+default.o.build \
+fd_move.c \
+compile
+	sh makefile.build default.o.build fd_move.o fd_move
+
+fd_copy.o: \
+makefile.build \
+fd.h \
+default.o.build \
+fd_copy.c \
+compile
+	sh makefile.build default.o.build fd_copy.o fd_copy
+
+error_str.o: \
+makefile.build \
+error.h \
+default.o.build \
+error_str.c \
+compile
+	sh makefile.build default.o.build error_str.o error_str
+
+error.o: \
+makefile.build \
+error.h \
+default.o.build \
+error.c \
+compile
+	sh makefile.build default.o.build error.o error
+
+env.o: \
+makefile.build \
+env.h \
+str.h \
+default.o.build \
+env.c \
+compile
+	sh makefile.build default.o.build env.o env
+
+connect-io.o: \
+makefile.build \
+tai.h \
+taia.h \
+sig.h \
+ndelay.h \
+scan.h \
+strerr.h \
+exit.h \
+default.o.build \
+connect-io.c \
+compile \
+uint64.h \
+iopause.h
+	sh makefile.build default.o.build connect-io.o connect-io
+
+connect-io: \
+makefile.build \
+connect-io=x \
+default.build \
+unix.a \
+connect-io.o \
+load
+	sh makefile.build default.build connect-io connect-io
+
+compile: \
+makefile.build \
+warn-auto.sh \
+systype \
+print-compile.sh \
+conf-cc \
+default.build
+	sh makefile.build default.build compile compile
+
+coe.o: \
+makefile.build \
+coe.h \
+default.o.build \
+coe.c \
+compile
+	sh makefile.build default.o.build coe.o coe
+
+choosing: \
+makefile.build \
+choosing.sh \
+warn-auto.sh \
+choosing.sh \
+warn-auto.sh \
+default.build \
+makescrip \
+makeinclude \
+choosing=s
+	sh makefile.build default.build choosing choosing
+
+choose: \
+makefile.build \
+choose.sh \
+warn-auto.sh \
+choose.sh \
+warn-auto.sh \
+makescrip \
+makeinclude \
+choose=s \
+default.build
+	sh makefile.build default.build choose choose
+
+chkshsgr.o: \
+makefile.build \
+exit.h \
+default.o.build \
+chkshsgr.c \
+compile
+	sh makefile.build default.o.build chkshsgr.o chkshsgr
+
+chkshsgr: \
+makefile.build \
+chkshsgr=x \
+default.build \
+chkshsgr.o \
+load
+	sh makefile.build default.build chkshsgr chkshsgr
+
+cdb_make.o: \
+makefile.build \
+buffer.h \
+cdb_make.h \
+cdb.h \
+alloc.h \
+error.h \
+seek.h \
+default.o.build \
+cdb_make.c \
+compile \
+uint32.h
+	sh makefile.build default.o.build cdb_make.o cdb_make
+
+cdb_hash.o: \
+makefile.build \
+cdb.h \
+default.o.build \
+cdb_hash.c \
+compile \
+uint32.h
+	sh makefile.build default.o.build cdb_hash.o cdb_hash
+
+cdb.o: \
+makefile.build \
+cdb.h \
+byte.h \
+seek.h \
+error.h \
+default.o.build \
+cdb.c \
+compile \
+uint32.h
+	sh makefile.build default.o.build cdb.o cdb
+
+ccperl: \
+makefile.build \
+print-ccperl.sh \
+conf-perl \
+conf-ccperl \
+ccperl.build
+	sh makefile.build ccperl.build ccperl 
+
+byte_zero.o: \
+makefile.build \
+byte.h \
+default.o.build \
+byte_zero.c \
+compile
+	sh makefile.build default.o.build byte_zero.o byte_zero
+
+byte_diff.o: \
+makefile.build \
+byte.h \
+default.o.build \
+byte_diff.c \
+compile
+	sh makefile.build default.o.build byte_diff.o byte_diff
+
+byte_cr.o: \
+makefile.build \
+byte.h \
+default.o.build \
+byte_cr.c \
+compile
+	sh makefile.build default.o.build byte_cr.o byte_cr
+
+byte_copy.o: \
+makefile.build \
+byte.h \
+default.o.build \
+byte_copy.c \
+compile
+	sh makefile.build default.o.build byte_copy.o byte_copy
+
+byte_chr.o: \
+makefile.build \
+byte.h \
+default.o.build \
+byte_chr.c \
+compile
+	sh makefile.build default.o.build byte_chr.o byte_chr
+
+buffer_write.o: \
+makefile.build \
+buffer.h \
+default.o.build \
+buffer_write.c \
+compile
+	sh makefile.build default.o.build buffer_write.o buffer_write
+
+buffer_read.o: \
+makefile.build \
+buffer.h \
+default.o.build \
+buffer_read.c \
+compile
+	sh makefile.build default.o.build buffer_read.o buffer_read
+
+buffer_put.o: \
+makefile.build \
+error.h \
+byte.h \
+str.h \
+buffer.h \
+default.o.build \
+buffer_put.c \
+compile
+	sh makefile.build default.o.build buffer_put.o buffer_put
+
+buffer_get.o: \
+makefile.build \
+error.h \
+byte.h \
+buffer.h \
+default.o.build \
+buffer_get.c \
+compile
+	sh makefile.build default.o.build buffer_get.o buffer_get
+
+buffer_copy.o: \
+makefile.build \
+buffer.h \
+default.o.build \
+buffer_copy.c \
+compile
+	sh makefile.build default.o.build buffer_copy.o buffer_copy
+
+buffer_2.o: \
+makefile.build \
+buffer.h \
+default.o.build \
+buffer_2.c \
+compile
+	sh makefile.build default.o.build buffer_2.o buffer_2
+
+buffer_1.o: \
+makefile.build \
+buffer.h \
+default.o.build \
+buffer_1.c \
+compile
+	sh makefile.build default.o.build buffer_1.o buffer_1
+
+buffer_0.o: \
+makefile.build \
+buffer.h \
+default.o.build \
+buffer_0.c \
+compile
+	sh makefile.build default.o.build buffer_0.o buffer_0
+
+buffer.o: \
+makefile.build \
+buffer.h \
+default.o.build \
+buffer.c \
+compile
+	sh makefile.build default.o.build buffer.o buffer
+
+auto_home.o: \
+makefile.build \
+default.o.build \
+auto_home.c \
+compile
+	sh makefile.build default.o.build auto_home.o auto_home
+
+auto_home.c: \
+makefile.build \
+auto_home.c.build \
+home \
+auto-str
+	sh makefile.build auto_home.c.build auto_home.c 
+
+auto-str.o: \
+makefile.build \
+exit.h \
+buffer.h \
+default.o.build \
+auto-str.c \
+compile
+	sh makefile.build default.o.build auto-str.o auto-str
+
+auto-str: \
+makefile.build \
+auto-str=x \
+default.build \
+unix.a \
+auto-str.o \
+load
+	sh makefile.build default.build auto-str auto-str
+
+alloc_re.o: \
+makefile.build \
+byte.h \
+alloc.h \
+default.o.build \
+alloc_re.c \
+compile
+	sh makefile.build default.o.build alloc_re.o alloc_re
+
+alloc.o: \
+makefile.build \
+error.h \
+alloc.h \
+default.o.build \
+alloc.c \
+compile
+	sh makefile.build default.o.build alloc.o alloc
 
-ipc_listen.o: compile ipc_listen.c ipc.h
-	./compile ipc_listen.c
-
-ipc_local.o: compile ipc_local.c byte.h ipc.h
-	./compile ipc_local.c
-
-ipc_stream.o: compile ipc_stream.c ndelay.h ipc.h
-	./compile ipc_stream.c
-
-ipccat: makeinclude makescrip warn-auto.sh ipccat.sh
-	rm -f ipccat
-	./makeinclude code warn-auto.sh ipccat.sh \
-	| ./makescrip ipccat ipccat ipccat.tmp \
-	> ipccat
-	chmod 755 ipccat
-
-ipcclient: load ipcclient.o unix.a socket.lib
-	./load ipcclient unix.a  `cat socket.lib`
-
-ipcclient.o: compile ipcclient.c sig.h exit.h sgetopt.h str.h ipc.h \
-ipcpath.h fd.h buffer.h error.h strerr.h pathexec.h subgetopt.h
-	./compile ipcclient.c
-
-ipccommand: load ipccommand.o unix.a
-	./load ipccommand unix.a 
-
-ipccommand.o: compile ipccommand.c sig.h wait.h fork.h fmt.h scan.h \
-buffer.h strerr.h str.h exit.h
-	./compile ipccommand.c
-
-ipcconnect: makeinclude makescrip warn-auto.sh ipcconnect.sh
-	rm -f ipcconnect
-	./makeinclude code warn-auto.sh ipcconnect.sh \
-	| ./makescrip ipcconnect ipcconnect ipcconnect.tmp \
-	> ipcconnect
-	chmod 755 ipcconnect
-
-ipcdo: makeinclude makescrip warn-auto.sh ipcdo.sh
-	rm -f ipcdo
-	./makeinclude code warn-auto.sh ipcdo.sh \
-	| ./makescrip ipcdo ipcdo ipcdo.tmp \
-	> ipcdo
-	chmod 755 ipcdo
-
-ipcexec: load ipcexec.o unix.a
-	./load ipcexec unix.a 
-
-ipcexec-config: load ipcexec-config.o unix.a auto_home.o
-	./load ipcexec-config unix.a auto_home.o 
-
-ipcexec-config.o: compile ipcexec-config.c strerr.h exit.h auto_home.h \
-generic-conf.h fmt.h buffer.h
-	./compile ipcexec-config.c
-
-ipcexec.o: compile ipcexec.c str.h byte.h fmt.h scan.h exit.h prot.h \
-open.h stralloc.h alloc.h buffer.h error.h strerr.h env.h pathexec.h \
-rules.h fd.h gen_alloc.h stralloc.h gen_alloc.h
-	./compile ipcexec.c
-
-ipcexecrules: load ipcexecrules.o unix.a
-	./load ipcexecrules unix.a 
-
-ipcexecrules.o: compile ipcexecrules.c strerr.h stralloc.h getln.h \
-buffer.h exit.h fmt.h scan.h byte.h cdb_make.h open.h gen_alloc.h \
-buffer.h stralloc.h buffer.h uint32.h gen_alloc.h
-	./compile ipcexecrules.c
-
-ipcexecrulescheck: load ipcexecrulescheck.o unix.a
-	./load ipcexecrulescheck unix.a 
-
-ipcexecrulescheck.o: compile ipcexecrulescheck.c byte.h buffer.h strerr.h \
-env.h rules.h stralloc.h open.h exit.h stralloc.h gen_alloc.h gen_alloc.h
-	./compile ipcexecrulescheck.c
-
-ipchandle.o: compile ipchandle.c uint16.h str.h byte.h fmt.h scan.h ip4.h \
-fd.h exit.h env.h prot.h open.h wait.h stralloc.h alloc.h buffer.h \
-error.h strerr.h sgetopt.h ipc.h ipcpath.h ndelay.h rules.h sig.h \
-iopause.h coe.h lock.h gen_alloc.h subgetopt.h stralloc.h taia.h \
-gen_alloc.h tai.h uint64.h
-	./compile ipchandle.c
-
-ipcpath.h: compile tryipcpath print-ipcpath.sh
-	rm -f ipcpath.h
-	sh print-ipcpath.sh > ipcpath.h
-
-ipcperl: load ipcperl.o ipchandle.o unix.a socket.lib perlembed.lib
-	./load ipcperl ipchandle.o unix.a  `cat socket.lib` `cat perlembed.lib`
-
-ipcperl.o: compile ccperl ipcperl.c strerr.h stralloc.h str.h gen_alloc.h
-	./compile `cat ccperl` ipcperl.c
-
-ipcprint: load ipcprint.o ipchandle.o unix.a socket.lib
-	./load ipcprint ipchandle.o unix.a  `cat socket.lib`
-
-ipcprint.o: compile ipcprint.c buffer.h env.h
-	./compile ipcprint.c
-
-ipcrules: load ipcrules.o unix.a
-	./load ipcrules unix.a 
-
-ipcrules.o: compile ipcrules.c strerr.h stralloc.h getln.h buffer.h \
-exit.h fmt.h byte.h cdb_make.h scan.h open.h gen_alloc.h buffer.h \
-stralloc.h buffer.h uint32.h gen_alloc.h
-	./compile ipcrules.c
-
-ipcrulescheck: load ipcrulescheck.o unix.a
-	./load ipcrulescheck unix.a 
-
-ipcrulescheck.o: compile ipcrulescheck.c byte.h buffer.h strerr.h env.h \
-open.h rules.h exit.h stralloc.h gen_alloc.h
-	./compile ipcrulescheck.c
-
-ipcrun: makeinclude makescrip warn-auto.sh ipcrun.sh
-	rm -f ipcrun
-	./makeinclude code warn-auto.sh ipcrun.sh \
-	| ./makescrip ipcrun ipcrun ipcrun.tmp \
-	> ipcrun
-	chmod 755 ipcrun
-
-ipcserver: load ipcserver.o unix.a socket.lib
-	./load ipcserver unix.a  `cat socket.lib`
-
-ipcserver.o: compile ipcserver.c str.h byte.h fmt.h scan.h fd.h exit.h \
-env.h prot.h open.h wait.h stralloc.h alloc.h buffer.h error.h strerr.h \
-sgetopt.h pathexec.h ipc.h ipcpath.h rules.h sig.h ndelay.h gen_alloc.h \
-subgetopt.h stralloc.h gen_alloc.h
-	./compile ipcserver.c
-
-it: sysdeps ipcclient ipcserver ipccat ipcconnect ipcrules ipcrulescheck \
-ipcexecrules ipcexecrulescheck ipcdo ipccommand ipcexec ipcrun \
-ipcexec-config ipcprint getuid getgid connect-io ipcperl
-
-load: conf-ld print-ld.sh systype warn-auto.sh
-	rm -f load
-	sh print-ld.sh > load
-	chmod 755 load
-
-lock_ex.o: compile lock_ex.c hasflock.h lock.h
-	./compile lock_ex.c
-
-lock_un.o: compile lock_un.c hasflock.h lock.h
-	./compile lock_un.c
-
-makeinclude: makeinclude.sh warn-auto.sh
-	rm -f makeinclude
-	cat warn-auto.sh makeinclude.sh > makeinclude
-	chmod 755 makeinclude
-
-makelib: print-ar.sh systype warn-auto.sh
-	rm -f makelib
-	sh print-ar.sh > makelib
-	chmod 755 makelib
-
-makescrip: warn-auto.sh print-makescrip.sh conf-scrip home conf-ipcexec
-	rm -f makescrip
-	sh print-makescrip.sh < conf-scrip > makescrip
-	chmod 755 makescrip
-
-ndelay_off.o: compile ndelay_off.c ndelay.h
-	./compile ndelay_off.c
-
-ndelay_on.o: compile ndelay_on.c ndelay.h
-	./compile ndelay_on.c
-
-open_append.o: compile open_append.c open.h
-	./compile open_append.c
-
-open_read.o: compile open_read.c open.h
-	./compile open_read.c
-
-open_trunc.o: compile open_trunc.c open.h
-	./compile open_trunc.c
-
-pathexec_env.o: compile pathexec_env.c stralloc.h alloc.h str.h byte.h \
-env.h pathexec.h gen_alloc.h
-	./compile pathexec_env.c
-
-pathexec_run.o: compile pathexec_run.c error.h stralloc.h str.h env.h \
-pathexec.h gen_alloc.h
-	./compile pathexec_run.c
-
-perlembed.lib: conf-perl conf-ldperl print-perlembed.sh
-	rm -f perlembed.lib
-	sh print-ldperl.sh > perlembed.lib
-
-prot.o: compile prot.c hasshsgr.h prot.h
-	./compile prot.c
-
-rules.o: compile rules.c alloc.h stralloc.h open.h cdb.h rules.h \
-gen_alloc.h uint32.h stralloc.h gen_alloc.h
-	./compile rules.c
-
-scan_uint.o: compile scan_uint.c scan.h
-	./compile scan_uint.c
-
-scan_ulong.o: compile scan_ulong.c scan.h
-	./compile scan_ulong.c
-
-seek_set.o: compile seek_set.c seek.h
-	./compile seek_set.c
-
-select.h: choose compile trysysel.c select.h1 select.h2
-	./choose c trysysel select.h1 select.h2 > select.h
-
-sgetopt.o: compile sgetopt.c buffer.h sgetopt.h subgetopt.h subgetopt.h
-	./compile sgetopt.c
-
-sig.o: compile sig.c sig.h
-	./compile sig.c
-
-sig_block.o: compile sig_block.c sig.h hassgprm.h
-	./compile sig_block.c
-
-sig_catch.o: compile sig_catch.c sig.h hassgact.h
-	./compile sig_catch.c
-
-sig_pause.o: compile sig_pause.c sig.h hassgprm.h
-	./compile sig_pause.c
-
-socket.lib: trylsock.c compile load
-	( ( ./compile trylsock.c && \
-	./load trylsock -lsocket -lnsl ) >/dev/null 2>&1 \
-	&& echo -lsocket -lnsl || exit 0 ) > socket.lib
-	rm -f trylsock.o trylsock
-
-str_chr.o: compile str_chr.c str.h
-	./compile str_chr.c
-
-str_diff.o: compile str_diff.c str.h
-	./compile str_diff.c
-
-str_len.o: compile str_len.c str.h
-	./compile str_len.c
-
-str_start.o: compile str_start.c str.h
-	./compile str_start.c
-
-stralloc_cat.o: compile stralloc_cat.c byte.h stralloc.h gen_alloc.h
-	./compile stralloc_cat.c
-
-stralloc_catb.o: compile stralloc_catb.c stralloc.h byte.h gen_alloc.h
-	./compile stralloc_catb.c
-
-stralloc_cats.o: compile stralloc_cats.c byte.h str.h stralloc.h \
-gen_alloc.h
-	./compile stralloc_cats.c
-
-stralloc_copy.o: compile stralloc_copy.c byte.h stralloc.h gen_alloc.h
-	./compile stralloc_copy.c
-
-stralloc_eady.o: compile stralloc_eady.c alloc.h stralloc.h \
-gen_allocdefs.h gen_alloc.h
-	./compile stralloc_eady.c
-
-stralloc_opyb.o: compile stralloc_opyb.c stralloc.h byte.h gen_alloc.h
-	./compile stralloc_opyb.c
-
-stralloc_opys.o: compile stralloc_opys.c byte.h str.h stralloc.h \
-gen_alloc.h
-	./compile stralloc_opys.c
-
-stralloc_pend.o: compile stralloc_pend.c alloc.h stralloc.h \
-gen_allocdefs.h gen_alloc.h
-	./compile stralloc_pend.c
-
-strerr_die.o: compile strerr_die.c buffer.h exit.h strerr.h
-	./compile strerr_die.c
-
-strerr_sys.o: compile strerr_sys.c error.h strerr.h
-	./compile strerr_sys.c
-
-subgetopt.o: compile subgetopt.c subgetopt.h
-	./compile subgetopt.c
-
-sysdeps: systype compile load
-	rm -f sysdeps
-	cat systype compile load >> sysdeps
-	grep sysdep *.h 2>/dev/null >> sysdeps || :
-
-systype: find-systype.sh trycpp.c x86cpuid.c
-	sh find-systype.sh > systype
-
-tai_pack.o: compile tai_pack.c tai.h uint64.h
-	./compile tai_pack.c
-
-taia_add.o: compile taia_add.c taia.h tai.h uint64.h
-	./compile taia_add.c
-
-taia_approx.o: compile taia_approx.c taia.h tai.h uint64.h
-	./compile taia_approx.c
-
-taia_frac.o: compile taia_frac.c taia.h tai.h uint64.h
-	./compile taia_frac.c
-
-taia_less.o: compile taia_less.c taia.h tai.h uint64.h
-	./compile taia_less.c
-
-taia_now.o: compile taia_now.c taia.h tai.h uint64.h
-	./compile taia_now.c
-
-taia_pack.o: compile taia_pack.c taia.h tai.h uint64.h
-	./compile taia_pack.c
-
-taia_sub.o: compile taia_sub.c taia.h tai.h uint64.h
-	./compile taia_sub.c
-
-taia_uint.o: compile taia_uint.c taia.h tai.h uint64.h
-	./compile taia_uint.c
-
-tryipcpath: load tryipcpath.o fmt_ulong.o
-	./load tryipcpath fmt_ulong.o 
-
-tryipcpath.o: compile tryipcpath.c fmt.h
-	./compile tryipcpath.c
-
-uint32.h: choose compile load tryulong32.c uint32.h1 uint32.h2
-	./choose clr tryulong32 uint32.h1 uint32.h2 >uint32.h
-
-uint32_pack.o: compile uint32_pack.c uint32.h
-	./compile uint32_pack.c
-
-uint32_unpack.o: compile uint32_unpack.c uint32.h
-	./compile uint32_unpack.c
-
-uint64.h: choose compile load tryulong64.c uint64.h1 uint64.h2
-	./choose clr tryulong64 uint64.h1 uint64.h2 >uint64.h
-
-unix.a: makelib alloc.o alloc_re.o buffer.o buffer_0.o buffer_1.o \
-buffer_2.o buffer_get.o buffer_put.o buffer_copy.o buffer_read.o \
-buffer_write.o env.o error.o error_str.o fd_copy.o fd_move.o \
-fd_shutdown.o fmt_ulong.o scan_ulong.o scan_uint.o getln.o getln2.o \
-ipc_accept.o ipc_bind.o ipc_conn.o ipc_listen.o ipc_local.o ipc_eid.o \
-ipc_stream.o ndelay_on.o ndelay_off.o open_read.o open_trunc.o \
-open_append.o pathexec_env.o pathexec_run.o prot.o seek_set.o sgetopt.o \
-sig.o sig_block.o sig_catch.o sig_pause.o str_chr.o str_diff.o str_len.o \
-str_start.o stralloc_cat.o stralloc_catb.o stralloc_cats.o \
-stralloc_copy.o stralloc_eady.o stralloc_opyb.o stralloc_opys.o \
-stralloc_pend.o strerr_die.o strerr_sys.o subgetopt.o wait_nohang.o \
-wait_pid.o iopause.o iopause_proxy.o tai_pack.o taia_add.o taia_approx.o \
-taia_frac.o taia_less.o taia_now.o taia_pack.o taia_sub.o taia_uint.o \
-getpeereid.o cdb.o cdb_hash.o cdb_make.o byte_zero.o byte_copy.o \
-byte_chr.o byte_diff.o byte_cr.o rules.o uint32_pack.o uint32_unpack.o \
-generic-conf.o lock_ex.o lock_un.o coe.o
-	./makelib unix.a alloc.o alloc_re.o buffer.o buffer_0.o buffer_1.o \
-	buffer_2.o buffer_get.o buffer_put.o buffer_copy.o buffer_read.o \
-	buffer_write.o env.o error.o error_str.o fd_copy.o fd_move.o \
-	fd_shutdown.o fmt_ulong.o scan_ulong.o scan_uint.o getln.o getln2.o \
-	ipc_accept.o ipc_bind.o ipc_conn.o ipc_listen.o ipc_local.o ipc_eid.o \
-	ipc_stream.o ndelay_on.o ndelay_off.o open_read.o open_trunc.o \
-	open_append.o pathexec_env.o pathexec_run.o prot.o seek_set.o sgetopt.o \
-	sig.o sig_block.o sig_catch.o sig_pause.o str_chr.o str_diff.o str_len.o \
-	str_start.o stralloc_cat.o stralloc_catb.o stralloc_cats.o \
-	stralloc_copy.o stralloc_eady.o stralloc_opyb.o stralloc_opys.o \
-	stralloc_pend.o strerr_die.o strerr_sys.o subgetopt.o wait_nohang.o \
-	wait_pid.o iopause.o iopause_proxy.o tai_pack.o taia_add.o taia_approx.o \
-	taia_frac.o taia_less.o taia_now.o taia_pack.o taia_sub.o taia_uint.o \
-	getpeereid.o cdb.o cdb_hash.o cdb_make.o byte_zero.o byte_copy.o \
-	byte_chr.o byte_diff.o byte_cr.o rules.o uint32_pack.o uint32_unpack.o \
-	generic-conf.o lock_ex.o lock_un.o coe.o
-
-wait_nohang.o: compile wait_nohang.c haswaitp.h
-	./compile wait_nohang.c
-
-wait_pid.o: compile wait_pid.c error.h haswaitp.h
-	./compile wait_pid.c

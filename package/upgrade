@@ -6,7 +6,7 @@ usage() {
   shout "\
 usage: package/upgrade [ [-]part ... ]
 available parts:
-`package/parts list < compile/it=d`"
+`package/parts list < compile/commands`"
   exit 100
 }
 ####

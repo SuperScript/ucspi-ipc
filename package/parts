@@ -29,6 +29,7 @@ function flushlist(l, k) { for (k in l) delete l[i] }
 BEGIN {
   all = 1
   want[""] = 1
+  want["PRIVATE"] = 1
 
   # skip request arg
   if (ARGC > 2) {

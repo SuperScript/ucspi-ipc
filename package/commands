@@ -11,5 +11,7 @@ ipccommand
 ipcexec
 ipcrun
 ipcexec-config
+ipclisten
+ipcaccept
 connect-io PRIVATE
 ipcperl ipcperl
