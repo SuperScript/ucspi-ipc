@@ -109,3 +109,7 @@
 20091224
 	Add ipclisten and ipcaccept.
 
+20100102
+	Update packaging scripts.
+	version: 0.70
+

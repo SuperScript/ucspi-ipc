@@ -1,5 +1,8 @@
 package/exclude
 package/package
 package/path
+package/publish
+package/publish-cmd
+package/publish-dest
 doc
 html
