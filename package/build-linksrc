@@ -36,7 +36,7 @@ safe cd "$compile"
 [ -r home  ] || safe echo "$here" > home
 [ -h "$src"  ] || safe ln -s "../$src" "$src"
 ( exec 2>&3
-  ( safe cd "$src"; safe find ./ ) | while read f
+  ( safe cd "$src"; safe find . ) | while read f
   do
     case "$f" in
       ./.*)
@@ -51,19 +51,13 @@ safe cd "$compile"
       safe mkdir -p "$f"
     else
       fsrc="`dirname "$f" | sed -e 's!\([^/][^/]*\)!..!g' -e 's!\.\.$!'"$src"'!'`"
-      f="`echo "$f" | sed -e 's!^\./!!'`"
+      f="`echo "$f" | sed -e 's!^\.//*!!'`"
       [ -h "$f" ] || safe ln -s "$fsrc/$f" "$f"
     fi
   done
 ) 3>&1 | errgrep "fatal:"
 
 errexit $?
-
-#rcode=$?
-#if [ 0 != $rcode ]
-#then
-#  exit $rcode
-#fi
 
 exit 0
 
