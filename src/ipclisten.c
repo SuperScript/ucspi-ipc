@@ -83,7 +83,7 @@ void usage()
 {
   strerr_warn1("\
 ipclisten: usage: ipclisten \
-[ -UXhHoOdDqQvpP ] \
+[ -UdDqQv ] \
 [ -c limit ] \
 [ -g gid ] \
 [ -u uid ] \
@@ -156,11 +156,11 @@ int main(int argc,char * const *argv) {
   if (!verbosity)
     buffer_2->fd = -1;
  
-  path = *argv++;
+  path = *argv;
   if (!path) usage();
   if (str_equal(path,"")) usage();
 
-  if (!*argv) usage();
+  if (!*argv++) usage();
 
   sig_block(sig_child);
   sig_catch(sig_child,sigchld);

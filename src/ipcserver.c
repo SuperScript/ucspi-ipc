@@ -204,7 +204,7 @@ void usage()
 {
   strerr_warn1("\
 ipcserver: usage: ipcserver \
-[ -UXhHoOdDqQvpP ] \
+[ -UXoOdDqQvpP ] \
 [ -c limit ] \
 [ -x rules.cdb ] \
 [ -B banner ] \

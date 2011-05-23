@@ -14,7 +14,7 @@ ipcclient: unable to connect to ...: ...
 ipcclient: unable to connect to thislabelistoolongbecausetheunixdomainhasalimitofapproximatelyonehundredcharactersinasocketpathwhosebrightideawasittousevariablelengthaddressesinthefirstplacetheyshouldhaveknownbetter.: protocol error
 111
 --- ipcserver prints usage message without enough arguments
-ipcserver: usage: ipcserver [ -UXhHoOdDqQvpP ] [ -c limit ] [ -x rules.cdb ] [ -B banner ] [ -g gid ] [ -u uid ] [ -b backlog ] [ -l localname ] path program
+ipcserver: usage: ipcserver [ -UXoOdDqQvpP ] [ -c limit ] [ -x rules.cdb ] [ -B banner ] [ -g gid ] [ -u uid ] [ -b backlog ] [ -l localname ] path program
 100
 --- ipcclient prints error message
 ipcclient: unable to connect to ...: ...
@@ -283,6 +283,10 @@ ipcserver: pid x from
 ipcserver: ok x Local :UID,GID
 ipcserver: end x status 0
 ipcserver: status: 0/2
+log5
+ipclisten: status: 0/2
+ipclisten: status: 1/2
+ipclisten: status: 2/2
 --- ipcexec works
 ipcexec: ok .,0.echo
 hereur

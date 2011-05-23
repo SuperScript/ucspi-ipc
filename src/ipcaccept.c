@@ -207,7 +207,7 @@ void usage()
 {
   strerr_warn4(self,"\
 : usage: ",self," \
-[ -UXhHoOdDqQvpP ] \
+[ -XhHoOdDqQvpP ] \
 [ -x rules.cdb ] \
 [ -B banner ] \
 [ -l localname ] \
@@ -241,7 +241,7 @@ int main(int argc,char * const *argv) {
   int t;
   int trunc;
 
-  while ((opt = getopt(argc,argv,"vqQdDUXx:u:g:l:B:c:pP")) != opteof)
+  while ((opt = getopt(argc,argv,"vqQXx:l:B:pPf:")) != opteof)
     switch(opt) {
       case 'X': flagallownorules = 1; break;
       case 'x': fnrules = optarg; break;

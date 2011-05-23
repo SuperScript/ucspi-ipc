@@ -15,6 +15,7 @@ service=./rts-tmp
 socks="$service/s"
 sockt="$service/t"
 socke="$service/e"
+sockl="$service/l"
 sockc="$service/client"
 sockcs="$service/clientsock"
 testuid=`getuid`
@@ -60,6 +61,11 @@ run1=$!
 -Pp -c 2 -Bbanner -v -Xx rules.cdb -l Local -b 2 \
 $socke $service/eprint >$service/log4 2>&1 &
 run4=$!
+
+./ipclisten -c 2 -v -b 2 $sockl \
+./ipcaccept -Pp -Bbanner -v -Xx rules.cdb -lLocal \
+$service/eprint >$service/log5 2>&1 &
+run5=$!
 
 sleep 2
 
@@ -276,9 +282,10 @@ sleep 1
 } | sed -e "s/UID=$testuid\$/UID=UID/"  -e "s/GID=$testgid\$/GID=GID/"
 
 sleep 1
-kill -TERM $run1 $run4
+kill -TERM $run1 $run4 $run5
 wait $run1
 wait $run4
+wait $run5
 
 echo '--- ipcserver prints proper messages'
 echo log1
@@ -292,6 +299,12 @@ sed -e "s/:$testuid,$testgid/:UID,GID/"  -e 's/ [0-9]* / x /' \
     -e 's|from /[^:]*$|from x|'  -e 's|Local /[^:]*:|Local x:|' \
     -e 's/done [0-9]*$/done x/' \
     < $service/log4
+
+echo log5
+sed -e "s/:$testuid,$testgid/:UID,GID/"  -e 's/ [0-9]* / x /' \
+    -e 's|from /[^:]*$|from x|'  -e 's|Local /[^:]*:|Local x:|' \
+    -e 's/done [0-9]*$/done x/' \
+    < $service/log5
 
 ./ipcserver \
 -c 2 -Bipcexec -v -l Local -b 2 \

@@ -1,4 +1,5 @@
-ipchandler: initialization function separate from server function
-rules with lists of requester IDs.
-rules with server determining ID.
+ipchandler: initialization function separate from server function.
+Rules with lists of requester IDs.
+Rules with server determining ID.
+Pass file descriptors across socket.
 
