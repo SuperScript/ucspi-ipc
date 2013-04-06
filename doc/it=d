@@ -1,9 +1,8 @@
 UCSPI-IPC
-environment.html
+ucspi-ipc-environ.html
 getpeereid.html
 index.html
 install.html
-intro.html
 ipccat.html
 ipcclient.html
 ipccommand.html
@@ -19,23 +18,5 @@ ipcrules.html
 ipcrulescheck.html
 ipcrun.html
 ipcserver.html
-environment.css
-getpeereid.css
-index.css
-install.css
-ipccat.css
-ipcclient.css
-ipccommand.css
-ipcconnect.css
-ipcdo.css
-ipcexec-config.css
-ipcexec.css
-ipcexecrules.css
-ipcexecrulescheck.css
-ipchandle.css
-ipcperl.css
-ipcrules.css
-ipcrulescheck.css
-ipcrun.css
-ipcserver.css
+asciidoc.css
 

@@ -1,0 +1,89 @@
+= Introduction
+
+* How to install  link:install.html[ucspi-ipc]
+
+== Servers
+* The link:ipcserver.html[+ipcserver+] program
+* The link:ipcrules.html[+ipcrules+] program
+* The link:ipcrulescheck.html[+ipcrulescheck+] program
+
+////
+////
+
+* The link:ipcexec.html[+ipcexec+] program
+* The link:ipcexecrules.html[+ipcexecrules+] program
+* The link:ipcexecrulescheck.html[+ipcexecrulescheck+] program
+* The link:ipcexec-config.html[+ipcexec-config+] program
+
+== Clients
+* The link:ipcclient.html[+ipcclient+] program
+* The link:ipccat.html[+ipccat+] program
+* The link:ipcconnect.html[+ipcconnect+] program
+
+////
+////
+
+* The link:ipccommand.html[+ipccommand+] program
+* The link:ipcdo.html[+ipcdo+] program
+* The link:ipcrun.html[+ipcrun+] program
+
+== Preforking Servers
+* Compiling an link:ipchandle.html[+ipchandle+] server
+* The link:ipcperl.html[+ipcperl+] program
+
+== General Information
+* The ucspi-ipc link:ucspi-ipc-environ.html[environment variables]
+* The ucspi-ipc link:UCSPI-IPC[protocol description]
+
+////
+////
+
+* Support for link:getpeereid.html[+getpeereid+]
+
+
+== What Is ucspi-ipc?
+The +ipcserver+ and +ipcclient+ programs are command-line tools for building
+local-domain client-server applications.  They conform to the UNIX
+Client-Server Program Interface, http://cr.yp.to/proto/ucspi.txt[UCSPI].
+
+The +ipcserver+ program listens for connections on a local-domain
+stream socket, and runs a program for each connection it accepts.  The
+program environment includes variables that hold the local and remote
+socket addresses, and the effective user and group IDs of the process
+that called +connect+.  +ipcserver+ offers a concurrency limit
+on acceptance of new connections, and selective handling of
+connections based on client identity.
+
+The +ipcclient+ program requests a connection to a local-domain socket,
+and runs a program.  The program environment includes a variable that
+holds the local socket address.
+
+The +ipcperl+ program is an example of an link:ipchandle.html[+ipchandle+]
+server.  It invokes a perl subroutine for each request.
+
+== Features
+A service running as a privileged user under +ipcserver+ can perform tasks
+on behalf of nonprivileged users without setuid programs.  Clients user and
+group IDs are known to the server can be logged.  Access to any service is
+configurable through a standard, simple mechanism, based on the client user and
+group ID.
+
+== Operating System Support
+The ucspi-ipc package requires an implementation of +getpeereid+.
+Recent Linux kernels offer sufficient basis for +getpeereid+.
+Various operating systems implement a +getpeereid+ system call,
+including OpenBS{nbsp}3.0, FreeBS{nbsp}4.6, and AI{nbsp}5L.
+
+link:../patches/index.html[Patches] to add a +getpeereid+ system
+call are available for several operating systems.
+
+
+== Related Software
+
+#D#. J. Bernstein created the UCSPI framework and wrote
+http://cr.yp.to/ucspi-tcp.html[ucspi-tcp].
+
+Bruce Guenter has a protocol and package similar to ucspi-ipc called
+http://untroubled.org/ucspi-unix/[ucspi-unix]
+
+

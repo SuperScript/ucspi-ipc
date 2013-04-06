@@ -1,0 +1,19 @@
+= ipcrulescheck (1)
+:doctype: manpage
+
+== NAME
+ipcrulescheck - text ipcserver rules
+
+== SYNOPSIS 
+!!!!
+ipcrulescheck !cdb!
+!!!!
+
+== DESCRIPTION 
+The +ipcrulescheck+ program says what +!cdb!+ will direct +ipcserver+ to do
+with a connection from a process with effective user ID +$IPCREMOTEEUID+ and
+effective group ID +$IPCREMOTEEGID+.  The +!cdb!+ argument names a file
+created with +ipcrules+.
+
+== AUTHOR
+William Baxter <sst@superscript.com>

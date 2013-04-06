@@ -1,0 +1,26 @@
+= ipcexec-config (1)
+:doctype: manpage
+
+== NAME
+ipcexec-config - configure an instance of ipcexec
+
+== SYNOPSIS 
+!!!!
+ipcexec-config !user! !loguser! !dir!
+!!!!
+
+== DESCRIPTION 
+The +ipcexec-config+ program creates the directory +!dir!+ as an
+http://cr.yp.to/daemontools/svscan.html[svscan]-format service directory,
+configured to run +ipcexec+, running +ipcexec+ as +!user!+ and creating log
+files as +!loguser!+.
+
+The +ipcexec-config+ program creates the directory +!dir!/env+ containing
+files that establish runtime environment variables for +ipcexec+ via
+http://cr.yp.to/daemontools/envdir.html[envdir].  It creates the directory
++!dir!/rules+ to hold rules for the +ipcexec+ server.  It creates
++!dir!/rules/Makefile+ for compiling +!dir!/rules/data.cdb+ with
+link:ipcexecrules.html[+ipcexecrules+].
+
+== AUTHOR
+William Baxter <sst@superscript.com>

@@ -1,0 +1,38 @@
+= ucspi-ipc-environ (5)
+:doctype: manpage
+
+== NAME
+ucspi-ipc-environ - environment variables for ipc servers and clients
+
+== DESCRIPTION 
+The following environment variables are set for subordinate programs under
+servers and clients in ucspi-ipc:
+
++$PROTO+::
+The string +IPC+.  Both +ipcserver+ and +ipcclient+ set this environment
+variable.
+
++$IPCLOCALPATH+::
+The file name associated with the local socket.  Both +ipcserver+ and
++ipcclient+ set this environment variable.
+
++$IPCREMOTEPATH+::
+The path associated with the remote socket.  Only +ipcserver+ sets this
+environment variable.  If the remote socket is not bound to a path, then this
+environment variable is set, but empty.  Beware that +$IPCREMOTEPATH+ is under
+the control of the remote user, and can contain arbitrary characters.
+
++$IPCREMOTEEUID+::
+The effective user id of the client process that called +connect+, in decimal.
+Only +ipcserver+ sets this environment variable.
+
++$IPCREMOTEEGID+::
+The effective group id of the client process that called +connect+, in
+decimal.  Only +ipcserver+ sets this environment variable.
+
+== SEE ALSO 
+The link:ipcclient.html[+ipcclient+] program.
+The link:ipcserver.html[+ipcserver+] program.
+
+== AUTHOR
+William Baxter <sst@superscript.com>

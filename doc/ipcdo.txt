@@ -1,0 +1,21 @@
+= ipcdo (1)
+:doctype: manpage
+
+== NAME
+ipcdo - run an ipc command
+
+== SYNOPSIS 
+!!!!
+ipcdo !user! !prog!
+!!!!
+
+== DESCRIPTION 
+The +ipcdo+ program uses link:ipccommand.html[+ipccommand+] and
+link:ipcclient.html[+ipcclient+] to connect to the
+link:ipcexec.html[+ipcexec+] server at a path specified at compile time.  It
+sends any input it receives to the +ipcexec+ server, and prints any data it
+receives.
+
+== AUTHOR
+William Baxter <sst@superscript.com>
+

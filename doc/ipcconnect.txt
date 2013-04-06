@@ -1,0 +1,18 @@
+= ipcconnect (1)
+:doctype: manpage
+
+== NAME
+ipcconnect - pass data to and from a local domain socket
+
+== SYNOPSIS 
+!!!!
+ipcconnect !path!
+!!!!
+
+== DESCRIPTION 
+The +ipcconnect+ program connects to a server at +!path!+.  It sends its
+standard input to the server, and prints any data it receives from the server
+to standard output.  It does no data conversion.
+
+== AUTHOR
+William Baxter <sst@superscript.com>

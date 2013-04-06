@@ -1,0 +1,19 @@
+= ipccat (1)
+:doctype: manpage
+
+== NAME
+ipccat - input to output on a local domain socket
+
+== SYNOPSIS 
+!!!!
+ipccat !path!
+!!!!
+where +!path!+ is the filename for the client to connect to.
+
+== DESCRIPTION 
+The +ipccat+ program connects to +!path!+.  It prints any data it receives.
++ipccat+ can be used to transfer binary data.  It does no data conversion.
+
+== AUTHOR
+William Baxter <sst@superscript.com>
+

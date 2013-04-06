@@ -1,0 +1,28 @@
+= ipcrun (1)
+:doctype: manpage
+
+== NAME
+ipcrun - run a command via ipccommand
+
+== SYNOPSIS 
+!!!!
+ipcrun !prog!
+!!!!
+
+== DESCRIPTION 
+The +ipcrun+ command uses +ipccommand+ and link:ipcclient.html[+ipcclient+] to
+connect to the link:ipcexec.html[+ipcexec+] server (specified at compile
+time).  It makes request a request to execute +!prog!+ with the highest
+privilege permitted by the server.
+
+The +ipcrun+ program sends any input it receives on standard input to the
++ipcexec+ server, and prints any data it receives from the server to standard
+output.  The usage above is equivalent to the following
+link:ipcdo.html[+ipcdo+] invocation
+!!!!
+ipcdo root !prog!
+!!!!
+
+== AUTHOR
+William Baxter <sst@superscript.com>
+

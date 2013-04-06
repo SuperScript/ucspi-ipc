@@ -1,0 +1,44 @@
+= ipcclient (1)
+:doctype: manpage
+
+== NAME
+ipcclient - run a program for each connection on a local domain socket
+
+== SYNOPSIS 
+!!!!
+ipcclient !opts! !path! !prog!
+!!!!
+
+
+== DESCRIPTION 
+The +ipcclient+ program connects to the local-domain socket associated with
+the filename +!path!+.  It then runs +!prog!+, with descriptor 6 reading from
+the network and descriptor 7 writing to the network.  Before running +!prog!+,
++ipcclient+ sets certain link:ucspi-ipc-environ.html[environment variables].
+
+== Options
+=== General Options:
+
++-q+::
+Quiet.  Do not print error messages.
+
++-Q+::
+Print error messages.  This is the default.
+
++-v+::
+Verbose.  Do not print error messages and status messages.
+
+=== Connection options:
+
++-p !localpath!+::
+Bind the local socket to +!localpath!+ before attempting a connection.
+Without this option, do not bind any filename to the local socket.
+
+=== Data-gathering options:
+
++-l !localname!+::
+Do not look up the name associated with the local socket; use +!localname!+
+for the environment variable +$IPCLOCALPATH+.
+
+== AUTHOR
+William Baxter <sst@superscript.com>

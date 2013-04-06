@@ -1,0 +1,20 @@
+= ipcexecrulescheck (1)
+:doctype: manpage
+
+== NAME
+ipcexecrulescheck - test ipcexec rules
+
+== SYNOPSIS 
+!!!!
+ipcexecrulescheck !cdb!
+!!!!
+
+== DESCRIPTION 
+The +ipcexecrulescheck+ program says what the rules in +!cdb!+ will direct
++ipcexec+ to do with a request from a process with effective user ID
++$IPCREMOTEEUID+ and effective group ID +$IPCREMOTEEGID+ to run +$IPCCOMMAND+
+as user ID +$IPCUID+.  The +!cdb!+ argument names a file created with
++ipcexecrules+.  
+
+== AUTHOR
+William Baxter <sst@superscript.com>

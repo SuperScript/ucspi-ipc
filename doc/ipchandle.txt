@@ -1,0 +1,60 @@
+= ipchandle (7)
+:doctype: manpage
+
+== NAME
+ipchandle - template for preforking ipcserver
+
+== DESCRIPTION 
+
+The +ipchandle.c+ file provides a template for creating preforking
+link:ipcserver.html[+ipcserver+]-like servers.  The concurrency option (+-c+)
+sets the number of children that a ipchandle server forks upon startup.  The
+default setting is{nbsp}40.  Each child process listens for requests on the
+socket inherited from the parent process.
+
+If any of its child processes exits, a ipchandle server forks a new child
+process to replace the original.  When it receives SIGTERM, a ipchandle server
+sends SIGTERM to each of its children, waits for them to exit, and then itself
+exits.
+
+Before handling an accepted request, a ipchandle server sets certain
+link:ucspi-ipc-environ.html[environment variables], a la +ipcserver+.
+
+=== Server Code
+A ipchandle server invokes a +server+ subroutine for each request.  The
+subroutine reads from the network on file descripto{nbsp}0 and writes to the
+network on file descripto{nbsp}1:
+!!!!
+void server(int argc,char * const *argv)
+!!!!
+The arguments to +server+ are the command line arguments to the ipchandle
+server that remain after option parsing.
+
+The +server+ subroutine is called within a loop, with one iteration per
+request.  It must release any resources allocated to handle a particular
+request before returning to its caller.  This includes changes to the
+environment.
+
+=== Compiling A New ipchandle Server
+Create a file +src/myserver.c+ that implements the +server+ subroutine.
+Create a control file +src/myserver=x+ listing all necessary dependencies.
+Then
+!!!!
+build myserver
+!!!!
+
+The ucspi-ipc package includes two example servers: +ipcprint+, and
+link:ipcperl.html[+ipcperl+].
+
+== OPTIONS
+
+Each ipchandle server accepts all +ipcserver+ options, and in addition:
+
++-f !lockfile!+::
+Lock +!lockfile!+ around calls to +accept+.
+
+Utilize this option if your +accept+ system call suffers from the
+thundering herd problem.
+
+== AUTHOR
+William Baxter <sst@superscript.com>

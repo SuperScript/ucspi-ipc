@@ -1,0 +1,46 @@
+= ipcexec (1)
+:doctype: manpage
+
+== NAME
+ipcexec - handle ipc execution requests
+
+== SYNOPSIS 
+!!!!
+ipcexec !cdb!
+!!!!
+
+== DESCRIPTION 
+The +ipcexec+ program reads a user ID +!USERID!+ and a program +!prog!+ from
+file descriptor 0, and reads the remote user ID and group ID from the
+environment variables +IPCREMOTEEUID+ and +IPCREMOTEEGID+.  If the rules in
++!cdb!+ permit the remote user to execute +!prog!+ as +!USERID!+, then
++ipcexec+ changes its effective user and group ID to match +!USERID!+, and
+executes +!prog!+.
+
+By default, +ipcexec+ redirects standard error to standard output before
+executing +!prog!+.  If the +$IPCERROUT+ environment variable is set to
++0+, then +ipcexec+ does not redirect standard error before executing
++!prog!+.
+
+
+If the rules in +!cdb!+ deny execution of the request, then +ipcexec+
+silently exit{nbsp}100.
+
+After processing the matching rule from +!cdb!+ and before executing the
+request, +ipcexec+ checks the following environment variables:
+
++$IPCERROUT+::
+If decimal nonzero, +ipcexec+ redirects standard error to standard output
+before executing +!prog!+.
+
++$IPCUID+::
+If set, then +ipcexec+ sets its effective user ID to +$IPCUID+ before
+executing +!prog!+.  This environment variable setting overrides +!USERID!+.
+
++$IPCGID+::
+If set, then +ipcexec+ sets its effective group ID to +$IPCGID+ before
+executing +!prog!+.  This environment variable setting overrides +!USERID!+.
+
+== AUTHOR
+William Baxter <sst@superscript.com>
+

@@ -1,0 +1,67 @@
+= ipcperl (1)
+:doctype: manpage
+
+== NAME
+ipcperl - preforking ipcserver running embedded Perl
+
+== SYNOPSIS 
+!!!!
+ipcperl !opts! !file! !prog!
+!!!!
+
+== DESCRIPTION 
+
+The +ipcperl+ program forks the requested number of children, each listening
+for IPC client connections.  Before handling any requests, each child parses
+and runs the perl code in +!file!+.  The file should end with a true
+expression, like a module.
+
+To handle a request, a child process executes +!prog!+ as a perl
+subroutine with one or more arguments, with file descripto{nbsp}0 reading from
+the network and file descripto{nbsp}1 writing to the network.  Before handling
+the request, the child sets certain environment variables, a la
+link:ipcserver.html[+ipcserver+].
+
+Each invocation of +!prog!+ handles a single request.  It is called within
+a loop, with one iteration per request, and therefore must release any
+resources allocated to handle a particular request.
+
+If +!prog!+ exits while handling a request, +ipcperl+ will start a new child
+process.
+
+
+=== Configuration
+Edit the following files in +src/+ as necessary for your installation.  Unless
+you use modules that require +xs+ support or a nonstandard version of perl,
+the defaults should suffice.
+
++ipcperl.c+::
+If your server uses a module like +DBI.pm+ you may need to add the requisite
++xs+ code.
+
++conf-ldperl+::
+Determine options required to load +ipcperl+.  By default, these are
+calculated automatically.  Using +xs+ code in +src/ipcperl.c+ may require
+manual option setting in +src/conf-ldperl+.
+
++conf-ccperl+::
+Determine options required to compile +ipcperl+.  By default, these are
+calculated automatically.
+
++conf-perl+::
+How to invoke perl to calculate options automatically in +conf-ccperl+ and
++conf-ldperl+.
+
+
+== BUGS 
+
+CDB_File::
+Iterative lookups succeed but random lookups fail.  Each +ipchandle+ server
+uses the original http://cr.yp.to/cdb.html[cdb] library for access control.
+The http://search.cpan.org/author/MSERGEANT/CDB_File-0.92[CDB_File-0.92]
+package redefines +cdb_findnext+ without declaring it static.  The linker may
+select the wrong definition.  Solution: Add +static+ to the declaration of
++cdb_findnext+ in CDB_File.xs.
+
+== AUTHOR
+William Baxter <sst@superscript.com>

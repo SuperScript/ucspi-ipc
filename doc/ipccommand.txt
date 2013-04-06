@@ -1,0 +1,28 @@
+= ipccommand (1)
+:doctype: manpage
+
+== NAME
+ipccommand - form an ipc client request
+
+== SYNOPSIS 
+!!!!
+ipccommand !uid! !prog!
+!!!!
+
+== DESCRIPTION 
+The +ipccommand+ program is designed to run under
+link:ipcclient.html[+ipcclient+].  It converts +!uid!+ and +!prog!+ to
+a request appropriate for transmission to link:ipcexec.html[+ipcexec+] and
+writes the result to file descripto{nbsp}7.  Thereafter, +ipccommand+ reads
+data from file descripto{nbsp}0 and writes it to file descripto{nbsp}7.
+Simultaneously, it reads data from file descripto{nbsp}6 and writes it to file
+descripto{nbsp}1.
+
+== EXIT STATUS 
+If +ipccommand+ is invoked incorrectly it complains to standard error and
+exit{nbsp}100.  If it encounters a read or write error, +ipccommand+ complains
+to standard error and exit{nbsp}111.  Otherwise, it exit{nbsp}0.
+
+== AUTHOR
+William Baxter <sst@superscript.com>
+

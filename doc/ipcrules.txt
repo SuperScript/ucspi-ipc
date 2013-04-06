@@ -1,0 +1,106 @@
+= ipcrules (1)
+:doctype: manpage
+
+== NAME
+ipcrules - compile rules for ipcserver
+
+== SYNOPSIS 
+!!!!
+ipcrules !cdb! !tmp!
+!!!!
+
+== DESCRIPTION 
+The +ipcrules+ program reads rules from its standard input and writes them
+into +!cdb!+ in a binary format suited for quick access by +ipcserver+.
+The update is atomic and can be run while +ipcserver+ is running.   It first
+writes the rules to +!tmp!+ and then moving +!tmp!+ on top of +!cdb!+.  If
++!tmp!+ already exists, it is destroyed.  The directories containing +!cdb!+
+and +!tmp!+ must be writable to +ipcrules+, and must also be on the same
+filesystem.
+
+If there is a problem with the input or with +!tmp!+, +ipcrules+ complains and
+leaves +!cdb!+ untouched.
+
+=== Rule Format
+A rule occupies one line.  A file containing rules may contain comments: lines
+beginning with # are ignored.
+
+Each rule contains an effective ID, a colon, and a list of instructions, with
+no extra spaces.  When +ipcserver+ receives a connection from that userid, it
+follows the instructions.
+
+=== Effective IDs
+The +ipcserver+ program looks for rules with various userids:
+
+. +$IPCREMOTEEUID.$IPCREMOTEEGID+;
+. +$IPCREMOTEEUID+;
+. +.$IPCREMOTEEGID+;
+. The empty string.
+
+It uses the first matching rule it finds.
+
+For example, here are some rules:
+!!!!
+1001.1010:first
+1002:second
+:third
+.1010:fourth
+!!!!
+
+If +$IPCREMOTEEUID+ is 5 and +$IPCREMOTEEGID+ is 10,
++ipcserver+ will follow the third instruction.
+
+If +$IPCREMOTEEUID+ is 1002, +ipcserver+ will follow the
+second instruction.
+
+If +$IPCREMOTEEUID+ is 5 and +$IPCREMOTEEGID+ is 1010,
++ipcserver+ will follow the fourth instruction.
+
+If +$IPCREMOTEEUID+ is 1001 and +$IPCREMOTEEGID+ is 1010,
++ipcserver+ will follow the first instruction.
+
+You can use link:ipcrulescheck.html[+ipcrulescheck+] to see how +ipcserver+
+will interpret rules in +!cdb!+.
+
+=== User Ranges
+The +ipcrules+ program treats
+!!!!
+1001-1023:instructions
+!!!!
+as an abbreviation for the rules
+!!!!
+1001:instructions
+1002:instructions
+...
+1023:instructions
+!!!!
+
+=== Instructions
+The instructions in a rule must begin with either +allow+ or
++deny+.  An instruction beginning with +deny+ tells
++ipcserver+ to drop the connection without running any program.
+For example, the rule
+!!!!
+:deny
+!!!!
+tells +ipcserver+ to drop any connection that is not handled by a more
+specific rule.
+
+The instruction may continue with some environment variables assignments, in
+the form +var="x"+.  +ipcserver+ adds an environment variable +$var+ with
+value +x+.  For example,
+!!!!
+1001:allow,ACCESS="special"
+!!!!
+adds an environment variable +$ACCESS+ with a value of +special+.  Any
+repeated character may appear in place of the quote character:
+!!!!
+1001:allow,ACCESS=/special/
+!!!!
+and any number of variables assignments may appear in a single rule:
+!!!!
+1001:allow,ACCESS="special",SECRETWORD=/mudshark/
+!!!!
+
+== AUTHOR
+William Baxter <sst@superscript.com>

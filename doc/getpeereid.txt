@@ -1,0 +1,44 @@
+= getpeereid (7)
+:doctype: manpage
+
+== NAME
+getpeereid - get effective user and group id of local domain socket peer
+
+== SYNOPSIS 
+!!!!
+int getpeereid(int !s!,uid_t *!u!,gid_t *!g!);
+!!!!
+
+== DESCRIPTION 
+The +getpeereid+ function stores the effective user and group IDs of the
+peer on local domain socket +!s!+ in +!u!+ and +!g!+, respectively.  It
+returns 0 if successful, and -1 if an error occurs, setting +errno+
+appropriately.
+
+When it accepts a connection, +ipcserver+ uses the effective user ID and
+effective group ID of the process that called +connect+ to decide whether to
+handle the connection or drop it immediately.  Therefore ucspi-ipc requires
+operating system support for passing the client credentials to the server.
+For discussions of various credential-passing mechanisms, see D.J. Bernstein's
+http://cr.yp.to/docs/secureipc.html[Secure interprocess communication] and the
+BugTraq mailing list thread stemming from
+http://www.securityfocus.com/templates/archive.pike?list=1&date=1999-01-01&msg=19990106040754.18811.qmail@cr.yp.to[Wiping out setuid programs].
+
+Programs in the ucspi-ipc package use +getpeereid+ to obtain client
+credentials.  Unless your operating system supports an implementation of
++getpeereid+, you cannot use ucspi-ipc.
+
+== Implementations
+Recent Linux kernels that support +SO_PEERCRED+ with
++getsockopt+ provide sufficient basis for a getpeereid function.
+Various systems offer a +gepeereid+ system call, including
+http://www.openbsd.org[OpenBS{nbsp}3.0],
+http://www.freebsd.org[FreeBS{nbsp}4.6], and
+http://www-1.ibm.com/servers/aix/index.html[AI{nbsp}5L].
+
+Experimental operating system link:../patches/index.html[patches]
+that add a +getpeereid+ system call are available for several BSD
+variants.
+
+== AUTHOR
+William Baxter <sst@superscript.com>

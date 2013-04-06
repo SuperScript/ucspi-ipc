@@ -1,0 +1,86 @@
+= Install
+
+== System requirements
+The {package} packageworks only under UNIX.  In addition, {package} requires
+an implementation of link:getpeereid.html[+getpeereid+].
+
+This package implements +getpeereid+ for recent Linux kernels.
+Some systems offer +gepeereid+ as system call, including
+http://www.openbsd.org[OpenBS{nbsp}3.0],
+http://www.freebsd.org[FreeBS{nbsp}4.6] and
+http://www-1.ibm.com/servers/aix/index.html[AI{nbsp}5L].
+Several link:../patches/index.html[patches] are also available to add
+a +getpeereid+ system call to older BSD operating system versions.
+
+On systems that lack +getpeereid+, {package} runs, but
+link:ipcserver.html[+ipcserver+] generates an error if +getpeereid+ is called,
+i.e. when invoked without the +-P+ switch.  The package regression tests fail
+on platforms without +getpeereid+.
+
+== Installation
+If necessary, create a +/package+ directory:
+!!!!
+mkdir /package
+chmod 1755 /package
+cd /package
+!!!!
+
+Download the {package} package.  The most recent {package} package is
+link:{package}-{version}.tar.gz[{version}].  Unpack {package} in
++/package+:
+!!!!
+gunzip {package}-{version}.tar
+tar -xpf {package}-{version}.tar
+rm {package}-{version}.tar
+cd {path}/{package}-{version}
+!!!!
+
+Compile the package:
+!!!!
+package/compile
+!!!!
+
+Run some tests:
+!!!!
+package/rts
+!!!!
+The output should be empty.  Tests will fail on systems that lack
++getpeereid+ support.
+
+Install the package:
+!!!!
+package/install
+!!!!
+
+Commands are installed in the
++/package/host/superscript.com/command+ directory.
+For compatibility with prior versions, commands are also installed in
+the +/usr/local/bin+ directory.
+
+Report successful installation:
+!!!!
+package/report
+!!!!
+
+
+== Package subsets
+To restrict the compile or install to a subset of the entire package,
+supply the name of a subset on the command line:
+!!!!
+package/compile !subset!
+package/rts !subset!
+package/install !subset!
+!!!!
+
+To exclude a subset from an operation, add a hyphen as the first
+command-line argument:
+!!!!
+package/compile - !subset!
+package/rts - !subset!
+package/install - !subset!
+!!!!
+
+Valid subsets in this package are +base+ and +ipcperl+.
+
+*NB*: Package subset handling will be removed in a future version.
+

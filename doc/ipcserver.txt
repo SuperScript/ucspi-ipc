@@ -1,0 +1,89 @@
+= ipcserver (1)
+:doctype: manpage
+
+== NAME
+ipcserver - run a program or connections on a local domain socket
+
+== SYNOPSIS 
+!!!!
+ipcserver !opts! !path! !prog!
+!!!!
+
+== DESCRIPTION
+The +ipcserver+ program listens for connections from local-domain clients.
+For each connection, it runs +!prog!+, with descriptor 0 reading from the
+network and descriptor 1 writing to the network.  Before running +!prog!+,
++ipcserver+ sets certain link:ucspi-ipc-environ.html[environment variables].
+
+The +ipcserver+ program exits when it receives SIGTERM.
+
+
+== OPTIONS
+=== General Options:
++-q+::
+Quiet.  Do not print error messages.
+
++-Q+::
+Print error messages.  This is the default.
+
++-v+::
+Verbose.  Print error messages and status messages.
+
+=== Connection options:
++-c !n!+::
+Do not handle more than +!n!+ simultaneous connections.  If there are +!n!+
+simultaneous connections copies of +prog+ running, defer acceptance of a new
+connection until one copy finishes.  +!n!+ must be a positive integer.  The
+default value is{nbsp}40.
+
++-x !cdb!+::
+Follow the rules compiled into +!cdb!+ by link:ipcrules.html[+ipcrules+].
+These rules may specify setting environment variables or rejecting connections
+from bad sources.  You can rerun +ipcrules+ to change the rules while
++ipcserver+ is running.
+
++-X+::
+With +-x !cdb!+, allow connections even if +!cdb!+ does not exist.  Normally
++ipcserver+ will drop the connection if +!cdb!+ does not exist.
+
++-B !banner!+::
+Write +!banner!+ to the network immediately after each connection is made.
+
++-g !gid!+::
+Switch group ID to +!gid!+ after preparing to receive connections.  +!gid!+
+must be a positive integer.
+
++-u !uid!+::
+Switch user ID to +!uid!+ after preparing to receive connections.  +!uid!+
+must be a positive integer.
+
++-U+::
+Same as +-g $GID -u $UID+.  Typically, +$GID+ and +$UID+ are set by
+http://cr.yp.to/daemontools/envuidgid.html[+envuidgid+].
+
++-b !n!+::
+Allow a backlog of approximately +!n!+ pending connections.
+
++-d+::
+Delete +!path!+ before binding it to a socket.  This is the default.
+
++-D+::
+No not delete +!path!+ before binding it to a socket.
+
+=== Data-gathering options:
++-l !localpath!+::
+Do not look up the path bound to the local socket; use +!localpath!+ for the
+environment variable +$IPCLOCALPATH+.
+
++-p+::
+Look up the peer's effective user and group IDs.  Put the results in the
+environment variables +$IPCREMOTEEUID+ and +$IPCREMOTEEGID+.  This is the
+default.
+
++-P+::
+Do not look up the peer's effective user and group IDs.  Unset the environment
+variables +$IPCREMOTEEUID+ and +$IPCREMOTEEGID+.
+
+== AUTHOR
+William Baxter <sst@superscript.com>
+
