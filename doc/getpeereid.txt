@@ -21,8 +21,8 @@ handle the connection or drop it immediately.  Therefore ucspi-ipc requires
 operating system support for passing the client credentials to the server.
 For discussions of various credential-passing mechanisms, see D.J. Bernstein's
 http://cr.yp.to/docs/secureipc.html[Secure interprocess communication] and the
-BugTraq mailing list thread stemming from
-http://www.securityfocus.com/templates/archive.pike?list=1&date=1999-01-01&msg=19990106040754.18811.qmail@cr.yp.to[Wiping out setuid programs].
+BugTraq mailing list thread containing
+http://seclists.org/bugtraq/1999/Jan/127[Re: Wiping out setuid programs].
 
 Programs in the ucspi-ipc package use +getpeereid+ to obtain client
 credentials.  Unless your operating system supports an implementation of
