@@ -1,3 +1,11 @@
+shout() { echo "makefile.build: $*" >&2; }
+barf() { shout "fatal: $*"; exit 111; }
+safe() { "$@" || barf "cannot $*"; }
+
+usage() {
+  shout "usage: makefile.build target [ basename ]"
+}
+
 build_ifcreated() {
   return
 }
@@ -30,7 +38,7 @@ build_it() {
   build_do "$build_it_target" "$build_it_base" "$build_it_tmp"  \
     &&  {
       [ -f "$build_it_tmp" ]  &&  mv "$build_it_tmp" "$build_it_target"
-    }  \
+    } \
     ||  {
       rm -f "$build_it_tmp"
       return 111
@@ -43,5 +51,6 @@ build_it() {
 # MAIN
 
 # build_it cmds target base
+[ 1 -le $# ] || usage
 build_it "$@"
 exit 0

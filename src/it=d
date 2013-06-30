@@ -17,4 +17,3 @@ getgid
 connect-io
 ipclisten
 ipcaccept
-ipcperl ipcperl

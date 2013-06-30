@@ -16,7 +16,7 @@ the filename +!path!+.  It then runs +!prog!+, with descriptor 6 reading from
 the network and descriptor 7 writing to the network.  Before running +!prog!+,
 +ipcclient+ sets certain link:ucspi-ipc-environ.html[environment variables].
 
-== Options
+== OPTIONS
 === General Options:
 
 +-q+::

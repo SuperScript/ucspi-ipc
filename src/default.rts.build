@@ -1,15 +1,12 @@
-if [ -r "$1=d" ]
-then
-  build_ifchanged "$1=d"
-  build_ifchanged `awk '{ print $1; }' <$1=d`
-else
-  build_ifcreated "$1=d"
-fi
+# whatever.rts
+# e.g. it.rts
+# assumes it.command target
 
-# Always rebuild.
-rm -f "$1.out"
-sh "$1.run" "$1" > "$1.out" 2>&1
-# Do not fail, but press on with other tests called from the wrapper.
-diff "$1.out" "$1.exp" || echo "Test $1 failed.  Run diff $1.out $1.exp" >&2
+build_ifchanged "$2.command"
+
+# Ignore errors.
+sh "$1.run" "$1" 2>&1 | cat -v > "$1.out"
+diff "$1.out" "$1.exp" || shout "test $1 failed; run diff $1.out $1.exp"
+
 build_notarget
 exit 0

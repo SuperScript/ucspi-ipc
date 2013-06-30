@@ -18,8 +18,8 @@ socke="$service/e"
 sockl="$service/l"
 sockc="$service/client"
 sockcs="$service/clientsock"
-testuid=`getuid`
-testgid=`getgid`
+testuid=`./getuid`
+testgid=`./getgid`
 
 echo '#!/bin/sh
   trap "" 13
@@ -230,7 +230,7 @@ echo '86.75:allow,which=/first/
 .75,0.test:allow,which=/fourth,test/
 .76,0.test:allow,which=/fifth,test/
 ,0.test:allow,which=/sixth,test/
-' | ipcrules $service/test.cdb $service/test.tmp; echo $?
+' | ./ipcrules $service/test.cdb $service/test.tmp; echo $?
 env IPCREMOTEEUID=86 IPCREMOTEEGID=75 ./ipcrulescheck $service/test.cdb
 env IPCREMOTEEUID=86 IPCREMOTEEGID=76 ./ipcrulescheck $service/test.cdb
 env IPCREMOTEEUID=86 IPCREMOTEEGID=100 ./ipcrulescheck $service/test.cdb
