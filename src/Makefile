@@ -875,6 +875,12 @@ ipcperl \
 ipcperl=d
 	sh makefile.build default.command.build ipcperl.command ipcperl
 
+ipcperl.install: \
+default.install.build \
+ipcperl.command \
+ipcperl=d
+	sh makefile.build default.install.build ipcperl.install ipcperl
+
 ipcperl.o: \
 ipcperl.o.build \
 compile \
@@ -1036,6 +1042,12 @@ default.command.build \
 it \
 it=d
 	sh makefile.build default.command.build it.command it
+
+it.install: \
+default.install.build \
+it.command \
+it=d
+	sh makefile.build default.install.build it.install it
 
 it.rts: \
 default.rts.build \
