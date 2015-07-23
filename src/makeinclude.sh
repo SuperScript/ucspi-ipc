@@ -2,7 +2,7 @@
 # For mode deps, print #include'd file names
 # For mode code, print code and #include'd code
 # 
-awk=`nawk 'BEGIN {print "nawk"}'` </dev/null 2>/dev/null || echo awk
+awk=`nawk 'BEGIN {print "nawk"}' </dev/null 2>/dev/null || echo awk`
 exec $awk '
 function shout(msg) { print "makeinclude: " msg | "cat - 1>&2"; }
 function barf(msg) { shout("fatal: " msg); exit 111; }
